@@ -12,7 +12,7 @@ export default function Marquee({
   const duration = speed === 'slow' ? '40s' : speed === 'fast' ? '20s' : '30s';
 
   return (
-    <div className="bg-noir-black text-pure-white py-6 overflow-hidden">
+    <div className="bg-noir-black text-pure-white py-8 overflow-hidden">
       <div
         className="flex whitespace-nowrap"
         style={{
@@ -22,7 +22,7 @@ export default function Marquee({
         {[...Array(4)].map((_, i) => (
           <span
             key={i}
-            className="text-sm tracking-[0.2em] uppercase mx-12"
+            className="text-sm tracking-[0.2em] uppercase mx-16"
           >
             {text}
           </span>

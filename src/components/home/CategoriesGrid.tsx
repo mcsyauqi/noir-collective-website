@@ -31,25 +31,25 @@ export default function CategoriesGrid() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-32 md:py-48 bg-pure-white">
+    <section ref={sectionRef} className="py-40 md:py-60 bg-pure-white">
       <div className="container-fluid">
         {/* Header */}
-        <div className="text-center mb-16 md:mb-24">
-          <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-6">
+        <div className="text-center mb-20 md:mb-32">
+          <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-8">
             Telusuri Berdasarkan
           </p>
-          <h2 className="text-3xl md:text-5xl font-serif">Kategori</h2>
+          <h2 className="text-4xl md:text-6xl font-serif">Kategori</h2>
         </div>
 
         {/* Categories Grid */}
-        <div className="categories-container grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 md:gap-8">
+        <div className="categories-container grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8 md:gap-10">
           {categories.map((category) => (
             <Link
               key={category.id}
               href={`/shop/${category.slug}`}
               className="category-item group"
             >
-              <div className="relative aspect-[3/4] overflow-hidden bg-warm-gray/20 mb-6">
+              <div className="relative aspect-[3/4] overflow-hidden bg-warm-gray/20 mb-8">
                 <Image
                   src={category.image}
                   alt={category.name}
@@ -60,7 +60,7 @@ export default function CategoriesGrid() {
                 <div className="absolute inset-0 bg-noir-black/0 group-hover:bg-noir-black/20 transition-colors duration-300" />
               </div>
               <div className="text-center">
-                <h3 className="text-sm tracking-[0.05em] group-hover:text-warm-gray transition-colors mb-2">
+                <h3 className="text-sm md:text-base tracking-[0.05em] group-hover:text-warm-gray transition-colors mb-3">
                   {category.name}
                 </h3>
                 <p className="text-xs text-warm-gray">
