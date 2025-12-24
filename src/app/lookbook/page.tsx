@@ -161,7 +161,7 @@ export default function LookbookPage() {
               </h3>
 
               {selectedImage.image.caption && (
-                <p className="text-warm-gray mb-6 text-sm italic">
+                <p className="text-warm-gray mb-6 text-sm">
                   {selectedImage.image.caption}
                 </p>
               )}

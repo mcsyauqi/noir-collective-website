@@ -79,7 +79,7 @@ export default function CollectionsPage() {
                 <h2 className="text-3xl md:text-5xl font-serif mb-4">
                   {collection.name}
                 </h2>
-                <p className="text-lg text-warm-gray italic mb-4">
+                <p className="text-lg text-warm-gray mb-4">
                   &quot;{collection.tagline}&quot;
                 </p>
                 <p className="text-warm-gray leading-relaxed mb-8">
