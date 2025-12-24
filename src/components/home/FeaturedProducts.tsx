@@ -43,27 +43,27 @@ export default function FeaturedProducts() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-32 bg-pure-white">
+    <section ref={sectionRef} className="py-24 md:py-36 bg-pure-white">
       <div className="container-fluid">
         {/* Header */}
-        <div className="featured-title flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
+        <div className="featured-title flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-20">
           <div>
-            <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-3">
-              Curated Selection
+            <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-4">
+              Pilihan Terkurasi
             </p>
-            <h2 className="text-3xl md:text-4xl font-serif">Featured Pieces</h2>
+            <h2 className="text-3xl md:text-4xl font-serif">Produk Unggulan</h2>
           </div>
           <Link
             href="/shop"
             className="inline-flex items-center gap-2 text-sm tracking-[0.1em] uppercase hover:text-warm-gray transition-colors group"
           >
-            View All
+            Lihat Semua
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 
         {/* Products Grid */}
-        <div className="products-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="products-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {featuredProducts.map((product) => (
             <div key={product.id} className="product-item">
               <ProductCard product={product} />

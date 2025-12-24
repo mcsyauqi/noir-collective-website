@@ -34,21 +34,21 @@ export default function CollectionsShowcase() {
   const featuredCollections = collections.slice(0, 3);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-32 bg-off-white">
+    <section ref={sectionRef} className="py-24 md:py-36 bg-off-white">
       <div className="container-fluid">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-3">
-            Explore
+        <div className="text-center mb-16 md:mb-20">
+          <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-4">
+            Jelajahi
           </p>
-          <h2 className="text-3xl md:text-4xl font-serif mb-4">Our Collections</h2>
+          <h2 className="text-3xl md:text-4xl font-serif mb-5">Koleksi Kami</h2>
           <p className="text-warm-gray max-w-md mx-auto">
-            Discover thoughtfully curated collections designed for the modern wardrobe
+            Temukan koleksi yang dikurasi dengan penuh pertimbangan untuk lemari pakaian modern
           </p>
         </div>
 
         {/* Collections Grid */}
-        <div className="collections-grid grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="collections-grid grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {featuredCollections.map((collection, index) => (
             <Link
               key={collection.id}
@@ -59,7 +59,7 @@ export default function CollectionsShowcase() {
             >
               <div
                 className={`relative ${
-                  index === 0 ? 'aspect-[3/4] md:aspect-auto md:h-full' : 'aspect-[4/5]'
+                  index === 0 ? 'aspect-[3/4] md:aspect-auto md:h-full min-h-[400px] md:min-h-[600px]' : 'aspect-[4/5] min-h-[280px]'
                 }`}
               >
                 <Image
@@ -67,22 +67,23 @@ export default function CollectionsShowcase() {
                   alt={collection.name}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-noir-black/70 via-noir-black/20 to-transparent" />
 
                 {/* Content */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 text-pure-white">
-                  <p className="text-xs tracking-[0.15em] uppercase text-warm-gray mb-2">
+                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10 text-pure-white">
+                  <p className="text-xs tracking-[0.15em] uppercase text-warm-gray mb-3">
                     {collection.season} {collection.year}
                   </p>
-                  <h3 className="text-2xl md:text-3xl font-serif mb-2">
+                  <h3 className="text-2xl md:text-3xl font-serif mb-3">
                     {collection.name}
                   </h3>
-                  <p className="text-sm text-pure-white/80 mb-4 line-clamp-2">
+                  <p className="text-sm text-pure-white/80 mb-5 line-clamp-2">
                     {collection.tagline}
                   </p>
                   <div className="flex items-center gap-2 text-sm tracking-[0.1em] uppercase group-hover:text-gold-accent transition-colors">
-                    <span>Explore</span>
+                    <span>Jelajahi</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
@@ -92,9 +93,9 @@ export default function CollectionsShowcase() {
         </div>
 
         {/* View All Link */}
-        <div className="text-center mt-12">
+        <div className="text-center mt-16">
           <Link href="/collections" className="btn-secondary">
-            View All Collections
+            Lihat Semua Koleksi
           </Link>
         </div>
       </div>

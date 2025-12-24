@@ -41,52 +41,53 @@ export default function EditorialSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 md:py-32 bg-noir-black text-pure-white">
+    <section ref={sectionRef} className="py-24 md:py-36 bg-noir-black text-pure-white">
       <div className="container-fluid">
-        <div className="editorial-container grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+        <div className="editorial-container grid md:grid-cols-2 gap-16 md:gap-24 items-center">
           {/* Image */}
           <div className="relative aspect-[4/5] overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1000&q=80"
-              alt="Brand philosophy"
+              src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1000&h=1250&fit=crop&q=80"
+              alt="Filosofi brand"
               fill
               className="editorial-image object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
 
           {/* Text Content */}
           <div className="editorial-text">
-            <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-4">
-              Our Philosophy
+            <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-5">
+              Filosofi Kami
             </p>
-            <h2 className="text-3xl md:text-5xl font-serif mb-6 leading-tight">
-              Less, but better. Timeless pieces for the modern wardrobe.
+            <h2 className="text-3xl md:text-5xl font-serif mb-8 leading-tight">
+              Lebih sedikit, tapi lebih baik. Potongan timeless untuk lemari pakaian modern.
             </h2>
-            <p className="text-warm-gray mb-8 leading-relaxed">
-              At NOIR Collective, we believe in the power of considered choices. Each
-              piece in our collection is thoughtfully designed to transcend trends,
-              crafted from the finest materials, and made to last. We partner with
-              artisans who share our commitment to quality and sustainability.
+            <p className="text-warm-gray mb-10 leading-relaxed text-base">
+              Di NOIR Collective, kami percaya pada kekuatan pilihan yang dipertimbangkan. Setiap
+              potongan dalam koleksi kami dirancang dengan penuh perhatian untuk melampaui tren,
+              dibuat dari bahan-bahan terbaik, dan dibuat untuk bertahan lama. Kami bermitra dengan
+              pengrajin yang berbagi komitmen kami terhadap kualitas dan keberlanjutan.
             </p>
-            <div className="space-y-4 mb-10">
-              <div className="flex items-center gap-4">
+            <div className="space-y-5 mb-12">
+              <div className="flex items-center gap-5">
                 <div className="w-12 h-[1px] bg-gold-accent" />
-                <p className="text-sm tracking-[0.1em]">Sustainably Sourced Materials</p>
+                <p className="text-sm tracking-[0.1em]">Bahan Bersumber Berkelanjutan</p>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-5">
                 <div className="w-12 h-[1px] bg-gold-accent" />
-                <p className="text-sm tracking-[0.1em]">Artisan Craftsmanship</p>
+                <p className="text-sm tracking-[0.1em]">Keahlian Pengrajin</p>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-5">
                 <div className="w-12 h-[1px] bg-gold-accent" />
-                <p className="text-sm tracking-[0.1em]">Timeless Design</p>
+                <p className="text-sm tracking-[0.1em]">Desain Timeless</p>
               </div>
             </div>
             <Link
               href="/about"
               className="btn-secondary border-pure-white text-pure-white hover:bg-pure-white hover:text-noir-black"
             >
-              Discover Our Story
+              Temukan Cerita Kami
             </Link>
           </div>
         </div>

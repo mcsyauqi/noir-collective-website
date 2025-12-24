@@ -6,27 +6,27 @@ import { Instagram, Facebook, Twitter, ArrowRight } from 'lucide-react';
 
 const footerLinks = {
   shop: [
-    { label: 'New Arrivals', href: '/shop?filter=new' },
-    { label: 'Best Sellers', href: '/shop?filter=bestsellers' },
+    { label: 'Produk Terbaru', href: '/shop?filter=new' },
+    { label: 'Terlaris', href: '/shop?filter=bestsellers' },
     { label: 'Outerwear', href: '/shop/outerwear' },
     { label: 'Knitwear', href: '/shop/knitwear' },
-    { label: 'Accessories', href: '/shop/accessories' },
-    { label: 'Gift Cards', href: '/gift-cards' },
+    { label: 'Aksesori', href: '/shop/accessories' },
+    { label: 'Kartu Hadiah', href: '/gift-cards' },
   ],
   about: [
-    { label: 'Our Story', href: '/about' },
-    { label: 'Sustainability', href: '/sustainability' },
-    { label: 'Craftsmanship', href: '/about#craftsmanship' },
-    { label: 'Press', href: '/press' },
-    { label: 'Careers', href: '/careers' },
+    { label: 'Cerita Kami', href: '/about' },
+    { label: 'Keberlanjutan', href: '/sustainability' },
+    { label: 'Keahlian', href: '/about#craftsmanship' },
+    { label: 'Pers', href: '/press' },
+    { label: 'Karir', href: '/careers' },
   ],
   help: [
-    { label: 'Contact Us', href: '/contact' },
-    { label: 'FAQs', href: '/faq' },
-    { label: 'Shipping & Returns', href: '/shipping-returns' },
-    { label: 'Size Guide', href: '/size-guide' },
-    { label: 'Care Instructions', href: '/care' },
-    { label: 'Track Order', href: '/track-order' },
+    { label: 'Hubungi Kami', href: '/contact' },
+    { label: 'FAQ', href: '/faq' },
+    { label: 'Pengiriman & Pengembalian', href: '/shipping-returns' },
+    { label: 'Panduan Ukuran', href: '/size-guide' },
+    { label: 'Petunjuk Perawatan', href: '/care' },
+    { label: 'Lacak Pesanan', href: '/track-order' },
   ],
 };
 
@@ -45,20 +45,20 @@ export default function Footer() {
   return (
     <footer className="bg-noir-black text-pure-white">
       {/* Newsletter Section */}
-      <div className="container-fluid py-16 md:py-24 border-b border-white/10">
+      <div className="container-fluid py-20 md:py-28 border-b border-white/10">
         <div className="max-w-2xl mx-auto text-center">
-          <h3 className="text-2xl md:text-3xl font-serif mb-4">
-            Join the NOIR Community
+          <h3 className="text-2xl md:text-3xl font-serif mb-5">
+            Bergabung dengan Komunitas NOIR
           </h3>
-          <p className="text-warm-gray text-sm mb-8">
-            Be the first to know about new arrivals, exclusive offers, and
-            insider access to private sales.
+          <p className="text-warm-gray text-sm mb-10">
+            Jadilah yang pertama mengetahui produk terbaru, penawaran eksklusif, dan
+            akses ke penjualan pribadi.
           </p>
 
           {subscribed ? (
             <div className="animate-fade-in">
               <p className="text-gold-accent">
-                Thank you for subscribing. Welcome to NOIR.
+                Terima kasih telah berlangganan. Selamat datang di NOIR.
               </p>
             </div>
           ) : (
@@ -67,14 +67,14 @@ export default function Footer() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder="Masukkan email Anda"
                 required
                 className="flex-1 px-4 py-3 bg-transparent border border-white/30 text-pure-white placeholder:text-warm-gray focus:border-gold-accent outline-none text-sm"
               />
               <button
                 type="submit"
                 className="px-6 py-3 bg-pure-white text-noir-black hover:bg-gold-accent transition-colors"
-                aria-label="Subscribe"
+                aria-label="Berlangganan"
               >
                 <ArrowRight className="w-5 h-5" />
               </button>
@@ -84,16 +84,15 @@ export default function Footer() {
       </div>
 
       {/* Links Section */}
-      <div className="container-fluid py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+      <div className="container-fluid py-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-16">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-block mb-6">
+            <Link href="/" className="inline-block mb-8">
               <h2 className="text-2xl font-serif tracking-[0.15em]">NOIR</h2>
             </Link>
-            <p className="text-sm text-warm-gray mb-6 max-w-xs">
-              Curated. Conscious. Contemporary. Timeless pieces for the modern
-              wardrobe.
+            <p className="text-sm text-warm-gray mb-8 max-w-xs leading-relaxed">
+              Terkurasi. Sadar. Kontemporer. Potongan timeless untuk lemari pakaian modern.
             </p>
             <div className="flex space-x-4">
               <a
@@ -128,8 +127,8 @@ export default function Footer() {
 
           {/* Shop */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase mb-6">Shop</h4>
-            <ul className="space-y-3">
+            <h4 className="text-xs tracking-[0.15em] uppercase mb-8">Belanja</h4>
+            <ul className="space-y-4">
               {footerLinks.shop.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -145,8 +144,8 @@ export default function Footer() {
 
           {/* About */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase mb-6">About</h4>
-            <ul className="space-y-3">
+            <h4 className="text-xs tracking-[0.15em] uppercase mb-8">Tentang</h4>
+            <ul className="space-y-4">
               {footerLinks.about.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -162,10 +161,10 @@ export default function Footer() {
 
           {/* Help */}
           <div>
-            <h4 className="text-xs tracking-[0.15em] uppercase mb-6">
-              Customer Care
+            <h4 className="text-xs tracking-[0.15em] uppercase mb-8">
+              Layanan Pelanggan
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.help.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -182,22 +181,27 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="container-fluid py-6 border-t border-white/10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex flex-wrap justify-center gap-6 text-xs text-warm-gray">
+      <div className="container-fluid py-8 border-t border-white/10">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-wrap justify-center gap-8 text-xs text-warm-gray">
             <Link href="/privacy" className="hover:text-pure-white transition-colors">
-              Privacy Policy
+              Kebijakan Privasi
             </Link>
             <Link href="/terms" className="hover:text-pure-white transition-colors">
-              Terms of Service
+              Syarat & Ketentuan
             </Link>
             <Link href="/accessibility" className="hover:text-pure-white transition-colors">
-              Accessibility
+              Aksesibilitas
             </Link>
           </div>
-          <p className="text-xs text-warm-gray">
-            © {new Date().getFullYear()} NOIR Collective. All rights reserved.
-          </p>
+          <div className="text-center md:text-right">
+            <p className="text-xs text-warm-gray">
+              © {new Date().getFullYear()} NOIR Collective. Hak cipta dilindungi.
+            </p>
+            <p className="text-xs text-warm-gray/60 mt-2">
+              Created by <span className="text-gold-accent">Creativism Digital Marketing</span>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

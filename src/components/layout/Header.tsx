@@ -11,21 +11,21 @@ import SearchModal from '@/components/ui/SearchModal';
 
 const navigation = [
   {
-    label: 'Shop',
+    label: 'Belanja',
     href: '/shop',
     children: [
-      { label: 'All Products', href: '/shop' },
+      { label: 'Semua Produk', href: '/shop' },
       { label: 'Outerwear', href: '/shop/outerwear' },
-      { label: 'Tops', href: '/shop/tops' },
-      { label: 'Bottoms', href: '/shop/bottoms' },
-      { label: 'Dresses', href: '/shop/dresses' },
+      { label: 'Atasan', href: '/shop/tops' },
+      { label: 'Bawahan', href: '/shop/bottoms' },
+      { label: 'Gaun', href: '/shop/dresses' },
       { label: 'Knitwear', href: '/shop/knitwear' },
-      { label: 'Accessories', href: '/shop/accessories' },
-      { label: 'Shoes', href: '/shop/shoes' },
+      { label: 'Aksesori', href: '/shop/accessories' },
+      { label: 'Sepatu', href: '/shop/shoes' },
     ],
   },
   {
-    label: 'Collections',
+    label: 'Koleksi',
     href: '/collections',
     children: [
       { label: 'Winter Solstice', href: '/collections/winter-solstice' },
@@ -35,8 +35,8 @@ const navigation = [
     ],
   },
   { label: 'Lookbook', href: '/lookbook' },
-  { label: 'About', href: '/about' },
-  { label: 'Sustainability', href: '/sustainability' },
+  { label: 'Tentang', href: '/about' },
+  { label: 'Keberlanjutan', href: '/sustainability' },
 ];
 
 export default function Header() {
@@ -89,19 +89,19 @@ export default function Header() {
         )}
       >
         {/* Announcement Bar */}
-        <div className="bg-noir-black text-pure-white text-center py-2.5 px-4">
+        <div className="bg-noir-black text-pure-white text-center py-3 px-4">
           <p className="text-[11px] tracking-[0.15em] uppercase">
-            Complimentary Shipping on Orders Over $500 | Free Returns
+            Gratis Ongkir untuk Pesanan di Atas Rp5.000.000 | Gratis Pengembalian
           </p>
         </div>
 
         <nav className="container-fluid">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-18 md:h-22">
             {/* Mobile Menu Button */}
             <button
               className="md:hidden p-2 -ml-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={isMobileMenuOpen ? 'Tutup menu' : 'Buka menu'}
             >
               {isMobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -111,7 +111,7 @@ export default function Header() {
             </button>
 
             {/* Desktop Navigation - Left */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-10">
               {navigation.slice(0, 3).map((item) => (
                 <div
                   key={item.label}
@@ -133,7 +133,7 @@ export default function Header() {
                           <Link
                             key={child.href}
                             href={child.href}
-                            className="block px-6 py-2 text-[12px] tracking-[0.05em] hover:bg-off-white transition-colors"
+                            className="block px-6 py-2.5 text-[12px] tracking-[0.05em] hover:bg-off-white transition-colors"
                           >
                             {child.label}
                           </Link>
@@ -156,7 +156,7 @@ export default function Header() {
             </Link>
 
             {/* Desktop Navigation - Right */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-10">
               {navigation.slice(3).map((item) => (
                 <Link
                   key={item.label}
@@ -169,11 +169,11 @@ export default function Header() {
             </div>
 
             {/* Icons */}
-            <div className="flex items-center space-x-4 md:space-x-5">
+            <div className="flex items-center space-x-5 md:space-x-6">
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="p-1 hover:text-warm-gray transition-colors"
-                aria-label="Search"
+                aria-label="Cari"
               >
                 <Search className="w-5 h-5" />
               </button>
@@ -200,7 +200,7 @@ export default function Header() {
               <button
                 onClick={openCart}
                 className="p-1 hover:text-warm-gray transition-colors relative"
-                aria-label="Open cart"
+                aria-label="Buka keranjang"
               >
                 <ShoppingBag className="w-5 h-5" />
                 {cartCount > 0 && (
@@ -220,10 +220,10 @@ export default function Header() {
           'fixed inset-0 z-40 bg-off-white transform transition-transform duration-500 md:hidden',
           isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         )}
-        style={{ top: '88px' }}
+        style={{ top: '96px' }}
       >
-        <nav className="container-fluid py-8">
-          <div className="space-y-6">
+        <nav className="container-fluid py-10">
+          <div className="space-y-8">
             {navigation.map((item) => (
               <div key={item.label}>
                 <Link
@@ -234,7 +234,7 @@ export default function Header() {
                   {item.label}
                 </Link>
                 {item.children && (
-                  <div className="mt-3 ml-4 space-y-2">
+                  <div className="mt-4 ml-4 space-y-3">
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
@@ -251,15 +251,15 @@ export default function Header() {
             ))}
           </div>
 
-          <div className="mt-12 pt-8 border-t border-warm-gray/30">
-            <div className="space-y-4">
+          <div className="mt-14 pt-10 border-t border-warm-gray/30">
+            <div className="space-y-5">
               <Link
                 href="/account"
                 className="flex items-center space-x-3 text-sm tracking-[0.05em]"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <User className="w-5 h-5" />
-                <span>Account</span>
+                <span>Akun</span>
               </Link>
               <Link
                 href="/wishlist"
