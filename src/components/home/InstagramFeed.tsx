@@ -63,28 +63,28 @@ export default function InstagramFeed() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-28 md:py-44 bg-off-white">
+    <section ref={sectionRef} className="py-32 md:py-48 bg-off-white">
       <div className="container-fluid">
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16 md:mb-24">
           <a
             href="https://instagram.com/noircollective"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 group"
+            className="inline-flex items-center gap-4 group mb-8"
           >
             <Instagram className="w-6 h-6" />
             <span className="text-sm tracking-[0.1em] uppercase group-hover:text-warm-gray transition-colors">
               @noircollective
             </span>
           </a>
-          <h2 className="text-3xl md:text-4xl font-serif mt-6">
+          <h2 className="text-3xl md:text-5xl font-serif">
             Belanja Tampilan
           </h2>
         </div>
 
         {/* Instagram Grid */}
-        <div className="insta-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+        <div className="insta-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
           {instagramPosts.map((post) => (
             <a
               key={post.id}
@@ -102,7 +102,7 @@ export default function InstagramFeed() {
               />
               <div className="absolute inset-0 bg-noir-black/0 group-hover:bg-noir-black/50 transition-colors duration-300 flex items-center justify-center">
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-pure-white text-center">
-                  <Instagram className="w-6 h-6 mx-auto mb-2" />
+                  <Instagram className="w-6 h-6 mx-auto mb-3" />
                   <p className="text-sm">{post.likes.toLocaleString()} suka</p>
                 </div>
               </div>

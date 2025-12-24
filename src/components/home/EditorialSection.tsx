@@ -41,9 +41,9 @@ export default function EditorialSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-28 md:py-44 bg-noir-black text-pure-white">
+    <section ref={sectionRef} className="py-32 md:py-48 bg-noir-black text-pure-white">
       <div className="container-fluid">
-        <div className="editorial-container grid md:grid-cols-2 gap-20 md:gap-28 items-center">
+        <div className="editorial-container grid md:grid-cols-2 gap-16 md:gap-24 items-center">
           {/* Image */}
           <div className="relative aspect-[4/5] overflow-hidden bg-warm-gray/20">
             <Image
@@ -57,29 +57,29 @@ export default function EditorialSection() {
 
           {/* Text Content */}
           <div className="editorial-text">
-            <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-6">
+            <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-8">
               Filosofi Kami
             </p>
             <h2 className="text-3xl md:text-5xl font-serif mb-10 leading-tight">
               Lebih sedikit, tapi lebih baik. Potongan timeless untuk lemari pakaian modern.
             </h2>
-            <p className="text-warm-gray mb-12 leading-relaxed text-base">
+            <p className="text-warm-gray mb-14 leading-relaxed text-base md:text-lg">
               Di NOIR Collective, kami percaya pada kekuatan pilihan yang dipertimbangkan. Setiap
               potongan dalam koleksi kami dirancang dengan penuh perhatian untuk melampaui tren,
               dibuat dari bahan-bahan terbaik, dan dibuat untuk bertahan lama. Kami bermitra dengan
               pengrajin yang berbagi komitmen kami terhadap kualitas dan keberlanjutan.
             </p>
-            <div className="space-y-6 mb-14">
-              <div className="flex items-center gap-6">
-                <div className="w-12 h-[1px] bg-gold-accent" />
+            <div className="space-y-6 mb-16">
+              <div className="flex items-center gap-8">
+                <div className="w-16 h-[1px] bg-gold-accent" />
                 <p className="text-sm tracking-[0.1em]">Bahan Bersumber Berkelanjutan</p>
               </div>
-              <div className="flex items-center gap-6">
-                <div className="w-12 h-[1px] bg-gold-accent" />
+              <div className="flex items-center gap-8">
+                <div className="w-16 h-[1px] bg-gold-accent" />
                 <p className="text-sm tracking-[0.1em]">Keahlian Pengrajin</p>
               </div>
-              <div className="flex items-center gap-6">
-                <div className="w-12 h-[1px] bg-gold-accent" />
+              <div className="flex items-center gap-8">
+                <div className="w-16 h-[1px] bg-gold-accent" />
                 <p className="text-sm tracking-[0.1em]">Desain Timeless</p>
               </div>
             </div>

@@ -34,15 +34,15 @@ export default function CollectionsShowcase() {
   const featuredCollections = collections.slice(0, 3);
 
   return (
-    <section ref={sectionRef} className="py-28 md:py-44 bg-off-white">
+    <section ref={sectionRef} className="py-32 md:py-48 bg-off-white">
       <div className="container-fluid">
         {/* Header */}
-        <div className="text-center mb-20 md:mb-28">
-          <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-5">
+        <div className="text-center mb-16 md:mb-24">
+          <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-6">
             Jelajahi
           </p>
-          <h2 className="text-3xl md:text-4xl font-serif mb-6">Koleksi Kami</h2>
-          <p className="text-warm-gray max-w-md mx-auto">
+          <h2 className="text-3xl md:text-5xl font-serif mb-8">Koleksi Kami</h2>
+          <p className="text-warm-gray max-w-lg mx-auto text-base leading-relaxed">
             Temukan koleksi yang dikurasi dengan penuh pertimbangan untuk lemari pakaian modern
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function CollectionsShowcase() {
             >
               <div
                 className={`relative ${
-                  index === 0 ? 'aspect-[3/4] md:aspect-auto md:h-full min-h-[450px] md:min-h-[700px]' : 'aspect-[4/5] min-h-[320px]'
+                  index === 0 ? 'aspect-[3/4] md:aspect-auto md:h-full min-h-[500px] md:min-h-[750px]' : 'aspect-[4/5] min-h-[380px]'
                 }`}
               >
                 <Image
@@ -77,13 +77,13 @@ export default function CollectionsShowcase() {
                   <p className="text-xs tracking-[0.15em] uppercase text-warm-gray mb-4">
                     {collection.season} {collection.year}
                   </p>
-                  <h3 className="text-2xl md:text-3xl font-serif mb-4">
+                  <h3 className="text-2xl md:text-3xl font-serif mb-5">
                     {collection.name}
                   </h3>
-                  <p className="text-sm text-pure-white/80 mb-6 line-clamp-2">
+                  <p className="text-sm text-pure-white/80 mb-8 line-clamp-2 leading-relaxed">
                     {collection.tagline}
                   </p>
-                  <div className="flex items-center gap-2 text-sm tracking-[0.1em] uppercase group-hover:text-gold-accent transition-colors">
+                  <div className="flex items-center gap-3 text-sm tracking-[0.1em] uppercase group-hover:text-gold-accent transition-colors">
                     <span>Jelajahi</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </div>
@@ -94,7 +94,7 @@ export default function CollectionsShowcase() {
         </div>
 
         {/* View All Link */}
-        <div className="text-center mt-20">
+        <div className="text-center mt-16 md:mt-24">
           <Link href="/collections" className="btn-secondary">
             Lihat Semua Koleksi
           </Link>

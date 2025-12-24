@@ -8,7 +8,6 @@ import { ArrowDown } from 'lucide-react';
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -59,7 +58,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden"
+      className="relative h-screen min-h-[750px] flex items-center justify-center overflow-hidden"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
@@ -75,12 +74,12 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div ref={textRef} className="relative z-10 text-center text-pure-white px-6">
-        <p className="hero-subtitle text-xs md:text-sm tracking-[0.3em] uppercase mb-8 text-warm-gray">
+      <div className="relative z-10 text-center text-pure-white px-8 md:px-12 max-w-4xl mx-auto">
+        <p className="hero-subtitle text-xs md:text-sm tracking-[0.3em] uppercase mb-10 text-warm-gray">
           Koleksi Musim Dingin 2025
         </p>
 
-        <h1 className="overflow-hidden mb-10">
+        <h1 className="overflow-hidden mb-12">
           <span className="hero-line block text-editorial">
             Seni dalam
           </span>
@@ -89,12 +88,12 @@ export default function Hero() {
           </span>
         </h1>
 
-        <p className="hero-subtitle max-w-md mx-auto text-sm md:text-base text-pure-white/80 mb-12">
+        <p className="hero-subtitle max-w-lg mx-auto text-base md:text-lg text-pure-white/80 mb-14 leading-relaxed">
           Terkurasi. Sadar. Kontemporer. <br />
           Potongan timeless untuk lemari pakaian modern.
         </p>
 
-        <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-5">
+        <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-6">
           <Link
             href="/collections/winter-solstice"
             className="btn-primary bg-pure-white text-noir-black border-pure-white hover:bg-transparent hover:text-pure-white"
@@ -113,7 +112,7 @@ export default function Hero() {
       {/* Scroll Indicator */}
       <button
         onClick={scrollToContent}
-        className="scroll-indicator absolute bottom-12 left-1/2 -translate-x-1/2 text-pure-white flex flex-col items-center gap-3 cursor-pointer z-10"
+        className="scroll-indicator absolute bottom-16 left-1/2 -translate-x-1/2 text-pure-white flex flex-col items-center gap-4 cursor-pointer z-10"
         aria-label="Scroll to content"
       >
         <span className="text-[10px] tracking-[0.2em] uppercase">Gulir</span>
@@ -121,7 +120,7 @@ export default function Hero() {
       </button>
 
       {/* Side Text */}
-      <div className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
+      <div className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2 z-10 hidden lg:block">
         <p className="text-[10px] tracking-[0.2em] text-pure-white/60 uppercase rotate-[-90deg] origin-left whitespace-nowrap">
           Est. 2020 — Jakarta, Indonesia
         </p>
