@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
+import Image from 'next/image';
 import { ArrowDown } from 'lucide-react';
 
 export default function Hero() {
@@ -60,22 +61,17 @@ export default function Hero() {
       ref={heroRef}
       className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden"
     >
-      {/* Background Video/Image */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&q=80"
-        >
-          <source
-            src="https://player.vimeo.com/external/370331493.hd.mp4?s=e90dcaba73c19e0e36f03406b47bbd6992dd6c1c&profile_id=175"
-            type="video/mp4"
-          />
-        </video>
-        <div className="absolute inset-0 bg-noir-black/40" />
+        <Image
+          src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1920&h=1080&fit=crop&q=80"
+          alt="Fashion editorial"
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-noir-black/50" />
       </div>
 
       {/* Content */}
