@@ -43,12 +43,12 @@ export default function FeaturedProducts() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-36 bg-pure-white">
+    <section ref={sectionRef} className="py-28 md:py-44 bg-pure-white">
       <div className="container-fluid">
         {/* Header */}
-        <div className="featured-title flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 md:mb-20">
+        <div className="featured-title flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20 md:mb-28">
           <div>
-            <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-4">
+            <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-5">
               Pilihan Terkurasi
             </p>
             <h2 className="text-3xl md:text-4xl font-serif">Produk Unggulan</h2>
@@ -63,7 +63,7 @@ export default function FeaturedProducts() {
         </div>
 
         {/* Products Grid */}
-        <div className="products-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+        <div className="products-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
           {featuredProducts.map((product) => (
             <div key={product.id} className="product-item">
               <ProductCard product={product} />

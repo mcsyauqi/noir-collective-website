@@ -63,10 +63,10 @@ export default function InstagramFeed() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-36 bg-off-white">
+    <section ref={sectionRef} className="py-28 md:py-44 bg-off-white">
       <div className="container-fluid">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <a
             href="https://instagram.com/noircollective"
             target="_blank"
@@ -78,20 +78,20 @@ export default function InstagramFeed() {
               @noircollective
             </span>
           </a>
-          <h2 className="text-3xl md:text-4xl font-serif mt-5">
+          <h2 className="text-3xl md:text-4xl font-serif mt-6">
             Belanja Tampilan
           </h2>
         </div>
 
         {/* Instagram Grid */}
-        <div className="insta-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="insta-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
           {instagramPosts.map((post) => (
             <a
               key={post.id}
               href="https://instagram.com/noircollective"
               target="_blank"
               rel="noopener noreferrer"
-              className="insta-item group relative aspect-square overflow-hidden"
+              className="insta-item group relative aspect-square overflow-hidden bg-warm-gray/20"
             >
               <Image
                 src={post.image}
