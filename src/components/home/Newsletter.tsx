@@ -1,33 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useState } from 'react';
 
 export default function Newsletter() {
-  const sectionRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.newsletter-content > *', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,49 +15,101 @@ export default function Newsletter() {
   };
 
   return (
-    <section ref={sectionRef} className="py-48 md:py-64 bg-noir-black">
-      <div className="container-fluid">
-        <div className="newsletter-content max-w-3xl mx-auto text-center">
-          <p className="text-gold-accent text-xs tracking-[0.4em] uppercase mb-10">
-            Tetap Terhubung
+    <section style={{ padding: '120px 0', backgroundColor: '#f8f6f3' }}>
+      <div className="container">
+        <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+          <p
+            style={{
+              fontSize: '12px',
+              letterSpacing: '4px',
+              textTransform: 'uppercase',
+              color: '#c9a962',
+              marginBottom: '24px'
+            }}
+          >
+            Newsletter
           </p>
 
-          <h2 className="text-pure-white text-4xl md:text-6xl font-serif mb-10">
-            Bergabung dengan Komunitas NOIR
+          <h2
+            className="font-serif"
+            style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              color: '#1a1a1a',
+              marginBottom: '24px'
+            }}
+          >
+            Bergabung dengan NOIR
           </h2>
 
-          <p className="text-warm-gray text-lg mb-16 max-w-xl mx-auto leading-relaxed">
-            Dapatkan akses eksklusif ke koleksi baru, undangan acara khusus,
-            dan penawaran terbatas langsung di inbox Anda.
+          <p
+            style={{
+              fontSize: '16px',
+              lineHeight: '1.8',
+              color: '#888888',
+              marginBottom: '48px'
+            }}
+          >
+            Dapatkan akses eksklusif ke koleksi baru dan penawaran khusus.
           </p>
 
           {submitted ? (
-            <div className="py-8">
-              <p className="text-gold-accent text-lg mb-4">Terima kasih telah bergabung!</p>
-              <p className="text-warm-gray">Kami akan menghubungi Anda segera.</p>
+            <div style={{ padding: '40px 0' }}>
+              <p style={{ color: '#c9a962', fontSize: '18px', marginBottom: '8px' }}>
+                Terima kasih!
+              </p>
+              <p style={{ color: '#888888' }}>
+                Kami akan menghubungi Anda segera.
+              </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Alamat email Anda"
-                className="flex-1 px-8 py-5 bg-transparent border border-warm-gray/50 text-pure-white placeholder:text-warm-gray/50 focus:border-gold-accent outline-none transition-colors"
-                required
-              />
-              <button
-                type="submit"
-                className="px-12 py-5 bg-pure-white text-noir-black text-sm tracking-[0.15em] uppercase hover:bg-gold-accent transition-colors duration-300"
-              >
-                Langganan
-              </button>
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px'
+              }}
+            >
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Alamat email Anda"
+                  required
+                  style={{
+                    flex: '1',
+                    minWidth: '200px',
+                    padding: '20px 24px',
+                    fontSize: '14px',
+                    border: '1px solid #e5e5e5',
+                    backgroundColor: 'white',
+                    outline: 'none'
+                  }}
+                />
+                <button
+                  type="submit"
+                  style={{
+                    padding: '20px 40px',
+                    backgroundColor: '#1a1a1a',
+                    color: 'white',
+                    fontSize: '12px',
+                    fontWeight: '500',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Langganan
+                </button>
+              </div>
+              <p style={{ fontSize: '12px', color: '#888888' }}>
+                Dengan berlangganan, Anda menyetujui kebijakan privasi kami.
+              </p>
             </form>
           )}
-
-          <p className="text-warm-gray/50 text-sm mt-10">
-            Dengan berlangganan, Anda menyetujui kebijakan privasi kami.
-          </p>
         </div>
       </div>
     </section>

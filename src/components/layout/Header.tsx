@@ -2,47 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Search, Heart, ShoppingBag, User } from 'lucide-react';
+import { Menu, X, Search, Heart, ShoppingBag } from 'lucide-react';
 import { useCartStore } from '@/store/cart';
 import { useWishlistStore } from '@/store/wishlist';
-import { cn } from '@/lib/utils';
 import CartDrawer from '@/components/cart/CartDrawer';
 import SearchModal from '@/components/ui/SearchModal';
 
 const navigation = [
-  {
-    label: 'Belanja',
-    href: '/shop',
-    children: [
-      { label: 'Semua Produk', href: '/shop' },
-      { label: 'Outerwear', href: '/shop/outerwear' },
-      { label: 'Atasan', href: '/shop/tops' },
-      { label: 'Bawahan', href: '/shop/bottoms' },
-      { label: 'Gaun', href: '/shop/dresses' },
-      { label: 'Knitwear', href: '/shop/knitwear' },
-      { label: 'Aksesori', href: '/shop/accessories' },
-      { label: 'Sepatu', href: '/shop/shoes' },
-    ],
-  },
-  {
-    label: 'Koleksi',
-    href: '/collections',
-    children: [
-      { label: 'Winter Solstice', href: '/collections/winter-solstice' },
-      { label: 'Essential Edit', href: '/collections/essential-edit' },
-      { label: 'Evening Edit', href: '/collections/evening-edit' },
-      { label: 'Conscious Collection', href: '/collections/conscious-collection' },
-    ],
-  },
-  { label: 'Lookbook', href: '/lookbook' },
+  { label: 'Belanja', href: '/shop' },
+  { label: 'Koleksi', href: '/collections' },
   { label: 'Tentang', href: '/about' },
-  { label: 'Keberlanjutan', href: '/sustainability' },
 ];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -59,21 +33,9 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobileMenuOpen]);
 
   const cartCount = mounted ? getItemCount() : 0;
   const wishlistCount = mounted ? wishlistItems.length : 0;
@@ -81,204 +43,233 @@ export default function Header() {
   return (
     <>
       <header
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
-          isScrolled
-            ? 'bg-off-white/95 backdrop-blur-md shadow-sm'
-            : 'bg-transparent'
-        )}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          transition: 'all 0.3s ease',
+          backgroundColor: isScrolled ? 'rgba(248, 246, 243, 0.98)' : 'transparent',
+          backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+        }}
       >
         {/* Announcement Bar */}
-        <div className="bg-noir-black text-pure-white text-center py-3 px-4">
-          <p className="text-[11px] tracking-[0.15em] uppercase">
-            Gratis Ongkir untuk Pesanan di Atas Rp5.000.000 | Gratis Pengembalian
-          </p>
+        <div
+          style={{
+            backgroundColor: '#1a1a1a',
+            color: 'white',
+            textAlign: 'center',
+            padding: '12px 24px',
+            fontSize: '11px',
+            letterSpacing: '2px',
+            textTransform: 'uppercase',
+          }}
+        >
+          Gratis Ongkir untuk Pesanan di Atas Rp5.000.000
         </div>
 
-        <nav className="container-fluid">
-          <div className="flex items-center justify-between h-18 md:h-22">
+        {/* Main Navigation */}
+        <div className="container">
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              height: '80px',
+            }}
+          >
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 -ml-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? 'Tutup menu' : 'Buka menu'}
+              style={{
+                display: 'none',
+                padding: '8px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+              className="mobile-menu-btn"
+              aria-label="Menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="w-5 h-5" />
-              ) : (
-                <Menu className="w-5 h-5" />
-              )}
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
 
-            {/* Desktop Navigation - Left */}
-            <div className="hidden md:flex items-center space-x-10">
-              {navigation.slice(0, 3).map((item) => (
-                <div
-                  key={item.label}
-                  className="relative"
-                  onMouseEnter={() => setActiveDropdown(item.label)}
-                  onMouseLeave={() => setActiveDropdown(null)}
-                >
-                  <Link
-                    href={item.href}
-                    className="text-[12px] tracking-[0.1em] uppercase hover:text-warm-gray transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-
-                  {item.children && activeDropdown === item.label && (
-                    <div className="absolute top-full left-0 pt-4 animate-fade-in">
-                      <div className="bg-pure-white shadow-lg min-w-[200px] py-4">
-                        {item.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className="block px-6 py-2.5 text-[12px] tracking-[0.05em] hover:bg-off-white transition-colors"
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Logo */}
-            <Link
-              href="/"
-              className="absolute left-1/2 transform -translate-x-1/2 md:static md:transform-none"
-            >
-              <h1 className="text-xl md:text-2xl font-serif tracking-[0.15em]">
-                NOIR
-              </h1>
-            </Link>
-
-            {/* Desktop Navigation - Right */}
-            <div className="hidden md:flex items-center space-x-10">
-              {navigation.slice(3).map((item) => (
+            {/* Desktop Navigation */}
+            <nav style={{ display: 'flex', gap: '48px' }} className="desktop-nav">
+              {navigation.map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="text-[12px] tracking-[0.1em] uppercase hover:text-warm-gray transition-colors"
+                  style={{
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    textDecoration: 'none',
+                    color: isScrolled ? '#1a1a1a' : 'white',
+                    transition: 'color 0.3s ease',
+                  }}
                 >
                   {item.label}
                 </Link>
               ))}
-            </div>
+            </nav>
+
+            {/* Logo */}
+            <Link
+              href="/"
+              style={{
+                fontSize: '28px',
+                fontFamily: 'Georgia, serif',
+                letterSpacing: '4px',
+                textDecoration: 'none',
+                color: isScrolled ? '#1a1a1a' : 'white',
+                transition: 'color 0.3s ease',
+              }}
+            >
+              NOIR
+            </Link>
 
             {/* Icons */}
-            <div className="flex items-center space-x-5 md:space-x-6">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-1 hover:text-warm-gray transition-colors"
-                aria-label="Cari"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: isScrolled ? '#1a1a1a' : 'white',
+                  transition: 'color 0.3s ease',
+                }}
+                aria-label="Search"
               >
-                <Search className="w-5 h-5" />
+                <Search size={20} />
               </button>
 
               <Link
                 href="/wishlist"
-                className="p-1 hover:text-warm-gray transition-colors relative hidden md:block"
+                style={{
+                  position: 'relative',
+                  color: isScrolled ? '#1a1a1a' : 'white',
+                  transition: 'color 0.3s ease',
+                }}
+                className="desktop-only"
               >
-                <Heart className="w-5 h-5" />
+                <Heart size={20} />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-noir-black text-pure-white text-[10px] rounded-full flex items-center justify-center">
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '-8px',
+                      right: '-8px',
+                      width: '18px',
+                      height: '18px',
+                      backgroundColor: '#c9a962',
+                      color: '#1a1a1a',
+                      fontSize: '10px',
+                      fontWeight: '600',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     {wishlistCount}
                   </span>
                 )}
               </Link>
 
-              <Link
-                href="/account"
-                className="p-1 hover:text-warm-gray transition-colors hidden md:block"
-              >
-                <User className="w-5 h-5" />
-              </Link>
-
               <button
                 onClick={openCart}
-                className="p-1 hover:text-warm-gray transition-colors relative"
-                aria-label="Buka keranjang"
+                style={{
+                  position: 'relative',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: isScrolled ? '#1a1a1a' : 'white',
+                  transition: 'color 0.3s ease',
+                }}
+                aria-label="Cart"
               >
-                <ShoppingBag className="w-5 h-5" />
+                <ShoppingBag size={20} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-noir-black text-pure-white text-[10px] rounded-full flex items-center justify-center">
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '-8px',
+                      right: '-8px',
+                      width: '18px',
+                      height: '18px',
+                      backgroundColor: '#c9a962',
+                      color: '#1a1a1a',
+                      fontSize: '10px',
+                      fontWeight: '600',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     {cartCount}
                   </span>
                 )}
               </button>
             </div>
           </div>
-        </nav>
+        </div>
       </header>
 
       {/* Mobile Menu */}
-      <div
-        className={cn(
-          'fixed inset-0 z-40 bg-off-white transform transition-transform duration-500 md:hidden',
-          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        )}
-        style={{ top: '96px' }}
-      >
-        <nav className="container-fluid py-10">
-          <div className="space-y-8">
+      {isMobileMenuOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '130px',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: '#f8f6f3',
+            zIndex: 99,
+            padding: '40px 24px',
+          }}
+        >
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {navigation.map((item) => (
-              <div key={item.label}>
-                <Link
-                  href={item.href}
-                  className="text-lg tracking-[0.1em] uppercase block"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <div className="mt-4 ml-4 space-y-3">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className="text-sm text-warm-gray block"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  fontSize: '18px',
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  textDecoration: 'none',
+                  color: '#1a1a1a',
+                }}
+              >
+                {item.label}
+              </Link>
             ))}
-          </div>
+          </nav>
+        </div>
+      )}
 
-          <div className="mt-14 pt-10 border-t border-warm-gray/30">
-            <div className="space-y-5">
-              <Link
-                href="/account"
-                className="flex items-center space-x-3 text-sm tracking-[0.05em]"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <User className="w-5 h-5" />
-                <span>Akun</span>
-              </Link>
-              <Link
-                href="/wishlist"
-                className="flex items-center space-x-3 text-sm tracking-[0.05em]"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Heart className="w-5 h-5" />
-                <span>Wishlist ({wishlistCount})</span>
-              </Link>
-            </div>
-          </div>
-        </nav>
-      </div>
-
-      {/* Cart Drawer */}
       <CartDrawer />
-
-      {/* Search Modal */}
       <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .desktop-nav {
+            display: none !important;
+          }
+          .mobile-menu-btn {
+            display: block !important;
+          }
+          .desktop-only {
+            display: none !important;
+          }
+        }
+      `}</style>
     </>
   );
 }
