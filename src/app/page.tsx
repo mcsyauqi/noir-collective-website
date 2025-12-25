@@ -1,21 +1,19 @@
 import Hero from '@/components/home/Hero';
-import FeaturedProducts from '@/components/home/FeaturedProducts';
-import CollectionsShowcase from '@/components/home/CollectionsShowcase';
-import CategoriesGrid from '@/components/home/CategoriesGrid';
-import EditorialSection from '@/components/home/EditorialSection';
-import Marquee from '@/components/home/Marquee';
-import InstagramFeed from '@/components/home/InstagramFeed';
+import BrandStatement from '@/components/home/BrandStatement';
+import NewArrivals from '@/components/home/NewArrivals';
+import LookbookGrid from '@/components/home/LookbookGrid';
+import FeaturedCollection from '@/components/home/FeaturedCollection';
+import Newsletter from '@/components/home/Newsletter';
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Marquee />
-      <FeaturedProducts />
-      <CollectionsShowcase />
-      <CategoriesGrid />
-      <EditorialSection />
-      <InstagramFeed />
+      <BrandStatement />
+      <NewArrivals />
+      <LookbookGrid />
+      <FeaturedCollection />
+      <Newsletter />
     </>
   );
 }
