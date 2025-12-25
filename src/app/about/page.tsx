@@ -5,389 +5,381 @@ import Image from 'next/image';
 
 export default function AboutPage() {
   return (
-    <>
-      {/* Hero */}
-      <div
-        style={{
-          width: '100%',
-          height: '100vh',
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
+    <main>
+      {/* HERO */}
+      <section className="hero">
         <Image
           src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&q=80"
-          alt="NOIR Collective"
+          alt="NOIR"
           fill
           priority
-          style={{ objectFit: 'cover' }}
+          sizes="100vw"
         />
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
-          }}
-        />
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            textAlign: 'center',
-            color: 'white',
-            padding: '20px',
-          }}
-        >
-          <p
-            style={{
-              fontSize: '11px',
-              letterSpacing: '4px',
-              textTransform: 'uppercase',
-              color: '#c9a962',
-              marginBottom: '30px',
-            }}
-          >
-            Cerita Kami
-          </p>
-          <h1
-            style={{
-              fontSize: '48px',
-              fontFamily: 'Georgia, serif',
-              fontWeight: 'normal',
-              marginBottom: '30px',
-            }}
-          >
-            Seni dalam Berpakaian
-          </h1>
-          <p
-            style={{
-              fontSize: '16px',
-              maxWidth: '500px',
-              margin: '0 auto',
-              lineHeight: '1.8',
-              opacity: 0.85,
-            }}
-          >
-            Didirikan pada tahun 2020, NOIR Collective lahir dari keinginan untuk menciptakan fashion yang menghormati manusia dan planet.
-          </p>
+        <div className="overlay" />
+        <div className="hero-content">
+          <span className="label">Cerita Kami</span>
+          <h1>Seni dalam Berpakaian</h1>
+          <p>Didirikan pada tahun 2020, NOIR Collective lahir dari keinginan untuk menciptakan fashion yang menghormati manusia dan planet.</p>
         </div>
-      </div>
+      </section>
 
-      {/* Story */}
-      <div style={{ backgroundColor: '#f8f6f3', padding: '100px 20px' }}>
-        <div
-          style={{
-            maxWidth: '1100px',
-            margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '60px',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{ position: 'relative', height: '500px' }}>
+      {/* STORY */}
+      <section className="story">
+        <div className="story-grid">
+          <div className="story-image">
             <Image
               src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80"
               alt="Craftsmanship"
               fill
-              style={{ objectFit: 'cover' }}
+              sizes="50vw"
             />
           </div>
-          <div>
-            <p
-              style={{
-                fontSize: '11px',
-                letterSpacing: '4px',
-                textTransform: 'uppercase',
-                color: '#c9a962',
-                marginBottom: '20px',
-              }}
-            >
-              Awal Mula Kami
-            </p>
-            <h2
-              style={{
-                fontSize: '32px',
-                fontFamily: 'Georgia, serif',
-                fontWeight: 'normal',
-                marginBottom: '30px',
-                color: '#1a1a1a',
-              }}
-            >
-              Lebih sedikit, tapi lebih baik.
-            </h2>
-            <p
-              style={{
-                fontSize: '15px',
-                lineHeight: '1.9',
-                color: '#666',
-                marginBottom: '20px',
-              }}
-            >
-              NOIR Collective didirikan dengan keyakinan sederhana: bahwa fashion harus timeless, bukan sementara. Di dunia fast fashion dan tren yang berlalu, kami memilih jalan berbeda.
-            </p>
-            <p
-              style={{
-                fontSize: '15px',
-                lineHeight: '1.9',
-                color: '#666',
-                marginBottom: '20px',
-              }}
-            >
-              Pendiri kami, Maya Hartono, menghabiskan bertahun-tahun bekerja di industri fashion sebelum menyadari perlunya perubahan.
-            </p>
-            <p
-              style={{
-                fontSize: '15px',
-                lineHeight: '1.9',
-                color: '#666',
-              }}
-            >
-              Hari ini, NOIR Collective mewakili pertemuan antara kemewahan dan tanggung jawab.
-            </p>
+          <div className="story-text">
+            <span className="label">Awal Mula Kami</span>
+            <h2>Lebih sedikit, tapi lebih baik.</h2>
+            <p>NOIR Collective didirikan dengan keyakinan sederhana: bahwa fashion harus timeless, bukan sementara.</p>
+            <p>Pendiri kami, Maya Hartono, menghabiskan bertahun-tahun bekerja di industri fashion sebelum menyadari perlunya perubahan.</p>
+            <p>Hari ini, NOIR Collective mewakili pertemuan antara kemewahan dan tanggung jawab.</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Values */}
-      <div style={{ backgroundColor: 'white', padding: '100px 20px' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <p
-              style={{
-                fontSize: '11px',
-                letterSpacing: '4px',
-                textTransform: 'uppercase',
-                color: '#999',
-                marginBottom: '15px',
-              }}
-            >
-              Yang Memandu Kami
-            </p>
-            <h2
-              style={{
-                fontSize: '32px',
-                fontFamily: 'Georgia, serif',
-                fontWeight: 'normal',
-                color: '#1a1a1a',
-              }}
-            >
-              Nilai-Nilai Kami
-            </h2>
+      {/* VALUES */}
+      <section className="values">
+        <div className="section-header">
+          <span className="label">Yang Memandu Kami</span>
+          <h2>Nilai-Nilai Kami</h2>
+        </div>
+        <div className="values-grid">
+          <div className="value-card">
+            <span className="num">01</span>
+            <h3>Desain Sadar</h3>
+            <p>Setiap potongan dirancang dengan penuh pertimbangan.</p>
           </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: '20px',
-            }}
-          >
-            {[
-              { num: '01', title: 'Desain Sadar', desc: 'Setiap potongan dirancang dengan penuh pertimbangan.' },
-              { num: '02', title: 'Produksi Etis', desc: 'Kami bermitra dengan pengrajin yang berbagi komitmen.' },
-              { num: '03', title: 'Bahan Berkualitas', desc: 'Kami mencari kain terbaik dari pemasok bersertifikat.' },
-              { num: '04', title: 'Estetika Timeless', desc: 'Desain kami merangkul minimalis dan keanggunan.' },
-            ].map((item) => (
-              <div
-                key={item.num}
-                style={{
-                  textAlign: 'center',
-                  padding: '40px 25px',
-                  border: '1px solid #eee',
-                }}
-              >
-                <div
-                  style={{
-                    width: '50px',
-                    height: '50px',
-                    border: '1px solid #c9a962',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto 25px',
-                    fontFamily: 'Georgia, serif',
-                    fontSize: '14px',
-                    color: '#c9a962',
-                  }}
-                >
-                  {item.num}
-                </div>
-                <h3
-                  style={{
-                    fontSize: '16px',
-                    fontFamily: 'Georgia, serif',
-                    fontWeight: 'normal',
-                    marginBottom: '12px',
-                    color: '#1a1a1a',
-                  }}
-                >
-                  {item.title}
-                </h3>
-                <p style={{ fontSize: '13px', color: '#888', lineHeight: '1.7' }}>
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+          <div className="value-card">
+            <span className="num">02</span>
+            <h3>Produksi Etis</h3>
+            <p>Kami bermitra dengan pengrajin yang berbagi komitmen.</p>
+          </div>
+          <div className="value-card">
+            <span className="num">03</span>
+            <h3>Bahan Berkualitas</h3>
+            <p>Kami mencari kain terbaik dari pemasok bersertifikat.</p>
+          </div>
+          <div className="value-card">
+            <span className="num">04</span>
+            <h3>Estetika Timeless</h3>
+            <p>Desain kami merangkul minimalis dan keanggunan.</p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Team */}
-      <div style={{ backgroundColor: '#f8f6f3', padding: '100px 20px' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-            <p
-              style={{
-                fontSize: '11px',
-                letterSpacing: '4px',
-                textTransform: 'uppercase',
-                color: '#999',
-                marginBottom: '15px',
-              }}
-            >
-              Kolektif
-            </p>
-            <h2
-              style={{
-                fontSize: '32px',
-                fontFamily: 'Georgia, serif',
-                fontWeight: 'normal',
-                color: '#1a1a1a',
-              }}
-            >
-              Tim Kami
-            </h2>
+      {/* TEAM */}
+      <section className="team">
+        <div className="section-header">
+          <span className="label">Kolektif</span>
+          <h2>Tim Kami</h2>
+        </div>
+        <div className="team-grid">
+          <div className="team-member">
+            <div className="member-image">
+              <Image
+                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80"
+                alt="Maya Hartono"
+                fill
+                sizes="300px"
+              />
+            </div>
+            <h3>Maya Hartono</h3>
+            <p>Founder & Creative Director</p>
           </div>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '40px',
-            }}
-          >
-            {[
-              { name: 'Maya Hartono', role: 'Founder & Creative Director', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80' },
-              { name: 'David Chen', role: 'Head of Design', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80' },
-              { name: 'Sarah Kim', role: 'Sustainability Director', img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80' },
-            ].map((member) => (
-              <div key={member.name} style={{ textAlign: 'center' }}>
-                <div style={{ position: 'relative', height: '280px', marginBottom: '25px' }}>
-                  <Image
-                    src={member.img}
-                    alt={member.name}
-                    fill
-                    style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
-                  />
-                </div>
-                <h3
-                  style={{
-                    fontSize: '16px',
-                    fontFamily: 'Georgia, serif',
-                    fontWeight: 'normal',
-                    marginBottom: '5px',
-                    color: '#1a1a1a',
-                  }}
-                >
-                  {member.name}
-                </h3>
-                <p style={{ fontSize: '12px', color: '#888' }}>{member.role}</p>
-              </div>
-            ))}
+          <div className="team-member">
+            <div className="member-image">
+              <Image
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
+                alt="David Chen"
+                fill
+                sizes="300px"
+              />
+            </div>
+            <h3>David Chen</h3>
+            <p>Head of Design</p>
+          </div>
+          <div className="team-member">
+            <div className="member-image">
+              <Image
+                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80"
+                alt="Sarah Kim"
+                fill
+                sizes="300px"
+              />
+            </div>
+            <h3>Sarah Kim</h3>
+            <p>Sustainability Director</p>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* CTA */}
-      <div
-        style={{
-          backgroundColor: '#1a1a1a',
-          padding: '100px 20px',
-          textAlign: 'center',
-        }}
-      >
-        <div style={{ maxWidth: '500px', margin: '0 auto' }}>
-          <h2
-            style={{
-              fontSize: '32px',
-              fontFamily: 'Georgia, serif',
-              fontWeight: 'normal',
-              color: 'white',
-              marginBottom: '25px',
-            }}
-          >
-            Bergabung dalam Perjalanan Kami
-          </h2>
-          <p
-            style={{
-              fontSize: '15px',
-              color: '#999',
-              lineHeight: '1.8',
-              marginBottom: '40px',
-            }}
-          >
-            Temukan komitmen kami terhadap fashion berkelanjutan.
-          </p>
-          <div>
-            <Link
-              href="/sustainability"
-              style={{
-                display: 'inline-block',
-                padding: '15px 40px',
-                border: '1px solid rgba(255,255,255,0.3)',
-                color: 'white',
-                textDecoration: 'none',
-                fontSize: '11px',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                marginRight: '15px',
-                marginBottom: '15px',
-              }}
-            >
-              Keberlanjutan
-            </Link>
-            <Link
-              href="/collections"
-              style={{
-                display: 'inline-block',
-                padding: '15px 40px',
-                backgroundColor: '#c9a962',
-                color: '#1a1a1a',
-                textDecoration: 'none',
-                fontSize: '11px',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-              }}
-            >
-              Koleksi
-            </Link>
-          </div>
+      <section className="cta">
+        <h2>Bergabung dalam Perjalanan Kami</h2>
+        <p>Temukan komitmen kami terhadap fashion berkelanjutan.</p>
+        <div className="cta-buttons">
+          <Link href="/sustainability" className="btn-outline">Keberlanjutan</Link>
+          <Link href="/collections" className="btn-gold">Koleksi</Link>
         </div>
-      </div>
+      </section>
 
-      {/* Mobile Responsive */}
-      <style jsx global>{`
+      <style jsx>{`
+        main {
+          padding-top: 80px;
+        }
+
+        .label {
+          display: block;
+          font-size: 11px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: #c9a962;
+          margin-bottom: 20px;
+        }
+
+        /* HERO */
+        .hero {
+          position: relative;
+          height: 100vh;
+          min-height: 500px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: white;
+        }
+        .hero :global(img) {
+          object-fit: cover;
+        }
+        .overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0,0,0,0.5);
+          z-index: 1;
+        }
+        .hero-content {
+          position: relative;
+          z-index: 2;
+          max-width: 600px;
+          padding: 0 20px;
+        }
+        .hero-content h1 {
+          font-size: 42px;
+          font-family: Georgia, serif;
+          font-weight: normal;
+          margin-bottom: 20px;
+        }
+        .hero-content p {
+          font-size: 16px;
+          line-height: 1.8;
+          opacity: 0.9;
+        }
+
+        /* STORY */
+        .story {
+          background: #f8f6f3;
+          padding: 100px 20px;
+        }
+        .story-grid {
+          max-width: 1100px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: center;
+        }
+        .story-image {
+          position: relative;
+          height: 500px;
+        }
+        .story-image :global(img) {
+          object-fit: cover;
+        }
+        .story-text h2 {
+          font-size: 32px;
+          font-family: Georgia, serif;
+          font-weight: normal;
+          margin-bottom: 30px;
+          color: #1a1a1a;
+        }
+        .story-text p {
+          font-size: 15px;
+          line-height: 1.9;
+          color: #666;
+          margin-bottom: 20px;
+        }
+
+        /* VALUES */
+        .values {
+          background: white;
+          padding: 100px 20px;
+        }
+        .section-header {
+          text-align: center;
+          margin-bottom: 60px;
+        }
+        .section-header .label {
+          color: #999;
+        }
+        .section-header h2 {
+          font-size: 32px;
+          font-family: Georgia, serif;
+          font-weight: normal;
+          color: #1a1a1a;
+        }
+        .values-grid {
+          max-width: 1100px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+        .value-card {
+          text-align: center;
+          padding: 40px 20px;
+          border: 1px solid #eee;
+        }
+        .value-card .num {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 50px;
+          height: 50px;
+          border: 1px solid #c9a962;
+          margin: 0 auto 20px;
+          font-family: Georgia, serif;
+          font-size: 14px;
+          color: #c9a962;
+        }
+        .value-card h3 {
+          font-size: 16px;
+          font-family: Georgia, serif;
+          font-weight: normal;
+          margin-bottom: 10px;
+          color: #1a1a1a;
+        }
+        .value-card p {
+          font-size: 13px;
+          color: #888;
+          line-height: 1.7;
+        }
+
+        /* TEAM */
+        .team {
+          background: #f8f6f3;
+          padding: 100px 20px;
+        }
+        .team-grid {
+          max-width: 900px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 40px;
+        }
+        .team-member {
+          text-align: center;
+        }
+        .member-image {
+          position: relative;
+          height: 280px;
+          margin-bottom: 20px;
+        }
+        .member-image :global(img) {
+          object-fit: cover;
+          filter: grayscale(100%);
+        }
+        .team-member h3 {
+          font-size: 16px;
+          font-family: Georgia, serif;
+          font-weight: normal;
+          margin-bottom: 5px;
+          color: #1a1a1a;
+        }
+        .team-member p {
+          font-size: 12px;
+          color: #888;
+        }
+
+        /* CTA */
+        .cta {
+          background: #1a1a1a;
+          padding: 100px 20px;
+          text-align: center;
+          color: white;
+        }
+        .cta h2 {
+          font-size: 32px;
+          font-family: Georgia, serif;
+          font-weight: normal;
+          margin-bottom: 20px;
+        }
+        .cta p {
+          font-size: 15px;
+          color: #999;
+          margin-bottom: 40px;
+        }
+        .cta-buttons {
+          display: flex;
+          gap: 15px;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+        .btn-outline {
+          padding: 15px 35px;
+          border: 1px solid rgba(255,255,255,0.3);
+          color: white;
+          text-decoration: none;
+          font-size: 11px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+        }
+        .btn-gold {
+          padding: 15px 35px;
+          background: #c9a962;
+          color: #1a1a1a;
+          text-decoration: none;
+          font-size: 11px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+        }
+
+        /* RESPONSIVE */
         @media (max-width: 900px) {
-          div[style*="gridTemplateColumns: repeat(4"] {
-            grid-template-columns: repeat(2, 1fr) !important;
+          .story-grid {
+            grid-template-columns: 1fr;
           }
-          div[style*="gridTemplateColumns: 1fr 1fr"] {
-            grid-template-columns: 1fr !important;
+          .story-image {
+            height: 400px;
+          }
+          .values-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .team-grid {
+            grid-template-columns: repeat(2, 1fr);
           }
         }
         @media (max-width: 600px) {
-          div[style*="gridTemplateColumns: repeat(4"] {
-            grid-template-columns: 1fr !important;
+          .hero-content h1 {
+            font-size: 32px;
           }
-          div[style*="gridTemplateColumns: repeat(3"] {
-            grid-template-columns: 1fr !important;
+          .values-grid {
+            grid-template-columns: 1fr;
+          }
+          .team-grid {
+            grid-template-columns: 1fr;
+          }
+          .member-image {
+            height: 300px;
           }
         }
       `}</style>
-    </>
+    </main>
   );
 }
