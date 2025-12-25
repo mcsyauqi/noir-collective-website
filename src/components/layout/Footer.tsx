@@ -3,235 +3,133 @@
 import Link from 'next/link';
 import { Instagram, Facebook, Twitter } from 'lucide-react';
 
-const footerLinks = {
-  shop: [
-    { label: 'Semua Produk', href: '/shop' },
-    { label: 'Outerwear', href: '/shop/outerwear' },
-    { label: 'Aksesori', href: '/shop/accessories' },
-  ],
-  about: [
-    { label: 'Tentang Kami', href: '/about' },
-    { label: 'Keberlanjutan', href: '/sustainability' },
-  ],
-  help: [
-    { label: 'Hubungi Kami', href: '/contact' },
-    { label: 'FAQ', href: '/faq' },
-    { label: 'Pengiriman', href: '/shipping' },
-  ],
-};
-
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: '#1a1a1a', color: 'white' }}>
-      {/* Main Footer */}
-      <div className="container" style={{ padding: '80px 24px' }}>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '48px',
-          }}
-        >
+    <>
+      <footer className="footer">
+        <div className="footer-inner">
           {/* Brand */}
-          <div>
-            <Link
-              href="/"
-              style={{
-                display: 'inline-block',
-                fontSize: '24px',
-                fontFamily: 'Georgia, serif',
-                letterSpacing: '4px',
-                color: 'white',
-                textDecoration: 'none',
-                marginBottom: '24px',
-              }}
-            >
-              NOIR
-            </Link>
-            <p
-              style={{
-                fontSize: '14px',
-                lineHeight: '1.8',
-                color: '#888888',
-                marginTop: '24px',
-                maxWidth: '280px',
-              }}
-            >
-              Potongan timeless untuk lemari pakaian modern.
-            </p>
-            <div style={{ display: 'flex', gap: '16px', marginTop: '32px' }}>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  border: '1px solid #333',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  textDecoration: 'none',
-                }}
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  border: '1px solid #333',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  textDecoration: 'none',
-                }}
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  border: '1px solid #333',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'white',
-                  textDecoration: 'none',
-                }}
-              >
-                <Twitter size={18} />
-              </a>
+          <div className="footer-brand">
+            <Link href="/" className="logo">NOIR</Link>
+            <p className="tagline">Timeless elegance, sustainably crafted</p>
+            <div className="social">
+              <a href="#" className="social-link"><Instagram size={18} /></a>
+              <a href="#" className="social-link"><Facebook size={18} /></a>
+              <a href="#" className="social-link"><Twitter size={18} /></a>
             </div>
           </div>
 
-          {/* Shop */}
-          <div>
-            <h4
-              style={{
-                fontSize: '12px',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                marginBottom: '24px',
-              }}
-            >
-              Belanja
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {footerLinks.shop.map((link) => (
-                <li key={link.href} style={{ marginBottom: '16px' }}>
-                  <Link
-                    href={link.href}
-                    style={{
-                      fontSize: '14px',
-                      color: '#888888',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* About */}
-          <div>
-            <h4
-              style={{
-                fontSize: '12px',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                marginBottom: '24px',
-              }}
-            >
-              Tentang
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {footerLinks.about.map((link) => (
-                <li key={link.href} style={{ marginBottom: '16px' }}>
-                  <Link
-                    href={link.href}
-                    style={{
-                      fontSize: '14px',
-                      color: '#888888',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Help */}
-          <div>
-            <h4
-              style={{
-                fontSize: '12px',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                marginBottom: '24px',
-              }}
-            >
-              Bantuan
-            </h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {footerLinks.help.map((link) => (
-                <li key={link.href} style={{ marginBottom: '16px' }}>
-                  <Link
-                    href={link.href}
-                    style={{
-                      fontSize: '14px',
-                      color: '#888888',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Links */}
+          <div className="footer-links">
+            <div className="link-group">
+              <h4>Belanja</h4>
+              <Link href="/shop">Semua Produk</Link>
+              <Link href="/collections">Koleksi</Link>
+              <Link href="/lookbook">Lookbook</Link>
+            </div>
+            <div className="link-group">
+              <h4>Tentang</h4>
+              <Link href="/about">Cerita Kami</Link>
+              <Link href="/sustainability">Keberlanjutan</Link>
+            </div>
+            <div className="link-group">
+              <h4>Bantuan</h4>
+              <Link href="/cart">Keranjang</Link>
+              <Link href="/wishlist">Wishlist</Link>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div
-        style={{
-          borderTop: '1px solid #333',
-          padding: '24px',
-        }}
-      >
-        <div
-          className="container"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '16px',
-            textAlign: 'center',
-          }}
-        >
-          <p style={{ fontSize: '12px', color: '#888888' }}>
-            © {new Date().getFullYear()} NOIR Collective. Hak cipta dilindungi.
-          </p>
-          <p style={{ fontSize: '11px', color: '#666666' }}>
-            Created by{' '}
-            <span style={{ color: '#c9a962' }}>Creativism Digital Marketing</span>
-          </p>
+        {/* Bottom */}
+        <div className="footer-bottom">
+          <p>&copy; 2024 NOIR Collective. All rights reserved.</p>
         </div>
-      </div>
-    </footer>
+      </footer>
+
+      <style jsx>{`
+        .footer {
+          background: #1a1a1a;
+          color: white;
+          padding: 80px 24px 40px;
+        }
+        .footer-inner {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        @media (min-width: 768px) {
+          .footer-inner {
+            grid-template-columns: 1fr 2fr;
+          }
+        }
+        .logo {
+          font-family: Georgia, serif;
+          font-size: 32px;
+          letter-spacing: 8px;
+          color: white;
+          text-decoration: none;
+          display: block;
+          margin-bottom: 16px;
+        }
+        .tagline {
+          font-size: 14px;
+          color: #888;
+          margin-bottom: 24px;
+        }
+        .social {
+          display: flex;
+          gap: 16px;
+        }
+        .social-link {
+          color: #888;
+          transition: color 0.3s;
+        }
+        .social-link:hover {
+          color: #c9a962;
+        }
+        .footer-links {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 32px;
+        }
+        @media (max-width: 600px) {
+          .footer-links {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+        }
+        .link-group h4 {
+          font-size: 12px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #c9a962;
+          margin-bottom: 20px;
+        }
+        .link-group :global(a) {
+          display: block;
+          font-size: 14px;
+          color: #888;
+          text-decoration: none;
+          margin-bottom: 12px;
+          transition: color 0.3s;
+        }
+        .link-group :global(a:hover) {
+          color: white;
+        }
+        .footer-bottom {
+          max-width: 1200px;
+          margin: 48px auto 0;
+          padding-top: 32px;
+          border-top: 1px solid #333;
+          text-align: center;
+        }
+        .footer-bottom p {
+          font-size: 12px;
+          color: #666;
+        }
+      `}</style>
+    </>
   );
 }

@@ -1,273 +1,191 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Search, Heart, ShoppingBag } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Menu, X, ShoppingBag, Heart, Search } from 'lucide-react';
 import { useCartStore } from '@/store/cart';
 import { useWishlistStore } from '@/store/wishlist';
-import CartDrawer from '@/components/cart/CartDrawer';
-import SearchModal from '@/components/ui/SearchModal';
 
-const navigation = [
-  { label: 'Belanja', href: '/shop' },
-  { label: 'Koleksi', href: '/collections' },
-  { label: 'Tentang', href: '/about' },
+const navLinks = [
+  { href: '/', label: 'Beranda' },
+  { href: '/shop', label: 'Belanja' },
+  { href: '/collections', label: 'Koleksi' },
+  { href: '/lookbook', label: 'Lookbook' },
+  { href: '/about', label: 'Tentang' },
+  { href: '/sustainability', label: 'Keberlanjutan' },
 ];
 
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const cartItems = useCartStore((state) => state.items);
+  const wishlistItems = useWishlistStore((state) => state.items);
 
-  const { openCart, getItemCount } = useCartStore();
-  const { items: wishlistItems } = useWishlistStore();
-
-  useEffect(() => {
-    setMounted(true);
-    useCartStore.persist.rehydrate();
-    useWishlistStore.persist.rehydrate();
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const cartCount = mounted ? getItemCount() : 0;
-  const wishlistCount = mounted ? wishlistItems.length : 0;
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const wishlistCount = wishlistItems.length;
 
   return (
     <>
-      <header
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          transition: 'all 0.3s ease',
-          backgroundColor: isScrolled ? 'rgba(248, 246, 243, 0.98)' : 'transparent',
-          backdropFilter: isScrolled ? 'blur(10px)' : 'none',
-        }}
-      >
-        {/* Announcement Bar */}
-        <div
-          style={{
-            backgroundColor: '#1a1a1a',
-            color: 'white',
-            textAlign: 'center',
-            padding: '12px 24px',
-            fontSize: '11px',
-            letterSpacing: '2px',
-            textTransform: 'uppercase',
-          }}
-        >
-          Gratis Ongkir untuk Pesanan di Atas Rp5.000.000
-        </div>
+      <header className="header">
+        <div className="header-inner">
+          {/* Logo */}
+          <Link href="/" className="logo">
+            NOIR
+          </Link>
 
-        {/* Main Navigation */}
-        <div className="container">
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              height: '80px',
-            }}
-          >
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              style={{
-                display: 'none',
-                padding: '8px',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-              }}
-              className="mobile-menu-btn"
-              aria-label="Menu"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-
-            {/* Desktop Navigation */}
-            <nav style={{ display: 'flex', gap: '48px' }} className="desktop-nav">
-              {navigation.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  style={{
-                    fontSize: '12px',
-                    letterSpacing: '2px',
-                    textTransform: 'uppercase',
-                    textDecoration: 'none',
-                    color: isScrolled ? '#1a1a1a' : 'white',
-                    transition: 'color 0.3s ease',
-                  }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Logo */}
-            <Link
-              href="/"
-              style={{
-                fontSize: '28px',
-                fontFamily: 'Georgia, serif',
-                letterSpacing: '4px',
-                textDecoration: 'none',
-                color: isScrolled ? '#1a1a1a' : 'white',
-                transition: 'color 0.3s ease',
-              }}
-            >
-              NOIR
-            </Link>
-
-            {/* Icons */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: isScrolled ? '#1a1a1a' : 'white',
-                  transition: 'color 0.3s ease',
-                }}
-                aria-label="Search"
-              >
-                <Search size={20} />
-              </button>
-
+          {/* Desktop Nav */}
+          <nav className="desktop-nav">
+            {navLinks.map((link) => (
               <Link
-                href="/wishlist"
-                style={{
-                  position: 'relative',
-                  color: isScrolled ? '#1a1a1a' : 'white',
-                  transition: 'color 0.3s ease',
-                }}
-                className="desktop-only"
+                key={link.href}
+                href={link.href}
+                className={`nav-link ${pathname === link.href ? 'active' : ''}`}
               >
-                <Heart size={20} />
-                {wishlistCount > 0 && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: '-8px',
-                      right: '-8px',
-                      width: '18px',
-                      height: '18px',
-                      backgroundColor: '#c9a962',
-                      color: '#1a1a1a',
-                      fontSize: '10px',
-                      fontWeight: '600',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {wishlistCount}
-                  </span>
-                )}
-              </Link>
-
-              <button
-                onClick={openCart}
-                style={{
-                  position: 'relative',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: isScrolled ? '#1a1a1a' : 'white',
-                  transition: 'color 0.3s ease',
-                }}
-                aria-label="Cart"
-              >
-                <ShoppingBag size={20} />
-                {cartCount > 0 && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      top: '-8px',
-                      right: '-8px',
-                      width: '18px',
-                      height: '18px',
-                      backgroundColor: '#c9a962',
-                      color: '#1a1a1a',
-                      fontSize: '10px',
-                      fontWeight: '600',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {cartCount}
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            top: '130px',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: '#f8f6f3',
-            zIndex: 99,
-            padding: '40px 24px',
-          }}
-        >
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-            {navigation.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                style={{
-                  fontSize: '18px',
-                  letterSpacing: '2px',
-                  textTransform: 'uppercase',
-                  textDecoration: 'none',
-                  color: '#1a1a1a',
-                }}
-              >
-                {item.label}
+                {link.label}
               </Link>
             ))}
           </nav>
+
+          {/* Icons */}
+          <div className="icons">
+            <Link href="/wishlist" className="icon-link">
+              <Heart size={20} />
+              {wishlistCount > 0 && <span className="badge">{wishlistCount}</span>}
+            </Link>
+            <Link href="/cart" className="icon-link">
+              <ShoppingBag size={20} />
+              {cartCount > 0 && <span className="badge">{cartCount}</span>}
+            </Link>
+            <button
+              className="mobile-menu-btn"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
-      )}
 
-      <CartDrawer />
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="mobile-menu">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`mobile-link ${pathname === link.href ? 'active' : ''}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </header>
 
-      <style jsx global>{`
-        @media (max-width: 768px) {
+      <style jsx>{`
+        .header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
+          background: rgba(255, 255, 255, 0.98);
+          border-bottom: 1px solid #eee;
+        }
+        .header-inner {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 24px;
+          height: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .logo {
+          font-family: Georgia, serif;
+          font-size: 28px;
+          letter-spacing: 8px;
+          color: #1a1a1a;
+          text-decoration: none;
+        }
+        .desktop-nav {
+          display: none;
+          gap: 40px;
+        }
+        @media (min-width: 900px) {
           .desktop-nav {
-            display: none !important;
+            display: flex;
           }
+        }
+        .nav-link {
+          font-size: 12px;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #666;
+          text-decoration: none;
+          transition: color 0.3s;
+        }
+        .nav-link:hover,
+        .nav-link.active {
+          color: #1a1a1a;
+        }
+        .icons {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .icon-link {
+          position: relative;
+          color: #1a1a1a;
+        }
+        .badge {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          width: 18px;
+          height: 18px;
+          background: #c9a962;
+          color: #1a1a1a;
+          font-size: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+        }
+        .mobile-menu-btn {
+          display: flex;
+          color: #1a1a1a;
+        }
+        @media (min-width: 900px) {
           .mobile-menu-btn {
-            display: block !important;
+            display: none;
           }
-          .desktop-only {
-            display: none !important;
-          }
+        }
+        .mobile-menu {
+          position: absolute;
+          top: 80px;
+          left: 0;
+          right: 0;
+          background: white;
+          border-bottom: 1px solid #eee;
+          padding: 20px 24px;
+        }
+        .mobile-link {
+          display: block;
+          padding: 12px 0;
+          font-size: 14px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: #666;
+          text-decoration: none;
+          border-bottom: 1px solid #f0f0f0;
+        }
+        .mobile-link:last-child {
+          border-bottom: none;
+        }
+        .mobile-link.active {
+          color: #1a1a1a;
         }
       `}</style>
     </>
