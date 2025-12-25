@@ -3,368 +3,391 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-const values = [
-  {
-    title: 'Desain Sadar',
-    description: 'Setiap potongan dirancang dengan penuh pertimbangan untuk melampaui musim dan tren.',
-  },
-  {
-    title: 'Produksi Etis',
-    description: 'Kami bermitra dengan pengrajin yang berbagi komitmen terhadap upah adil dan kondisi kerja yang aman.',
-  },
-  {
-    title: 'Bahan Berkualitas',
-    description: 'Kami mencari kain terbaik dari pemasok bersertifikat, mengutamakan bahan organik dan daur ulang.',
-  },
-  {
-    title: 'Estetika Timeless',
-    description: 'Desain kami merangkul minimalis dan keanggunan, menciptakan potongan yang bertahan lama.',
-  },
-];
-
-const team = [
-  {
-    name: 'Maya Hartono',
-    role: 'Founder & Creative Director',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80',
-  },
-  {
-    name: 'David Chen',
-    role: 'Head of Design',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80',
-  },
-  {
-    name: 'Sarah Kim',
-    role: 'Sustainability Director',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80',
-  },
-];
-
 export default function AboutPage() {
   return (
-    <div>
-      {/* Hero Section */}
-      <section
+    <>
+      {/* Hero */}
+      <div
         style={{
-          position: 'relative',
+          width: '100%',
           height: '100vh',
-          minHeight: '600px',
+          position: 'relative',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&q=80"
-            alt="NOIR Collective atelier"
-            fill
-            priority
-            className="object-cover"
-          />
-          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)' }} />
-        </div>
-
+        <Image
+          src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&q=80"
+          alt="NOIR Collective"
+          fill
+          priority
+          style={{ objectFit: 'cover' }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          }}
+        />
         <div
           style={{
             position: 'relative',
-            zIndex: 10,
+            zIndex: 1,
             textAlign: 'center',
             color: 'white',
-            padding: '0 24px',
-            maxWidth: '700px',
+            padding: '20px',
           }}
         >
-          <p style={{
-            fontSize: '11px',
-            letterSpacing: '4px',
-            textTransform: 'uppercase',
-            color: '#c9a962',
-            marginBottom: '32px',
-            fontWeight: '500'
-          }}>
+          <p
+            style={{
+              fontSize: '11px',
+              letterSpacing: '4px',
+              textTransform: 'uppercase',
+              color: '#c9a962',
+              marginBottom: '30px',
+            }}
+          >
             Cerita Kami
           </p>
-          <h1 style={{
-            fontSize: '48px',
-            fontFamily: 'Georgia, serif',
-            marginBottom: '32px',
-            fontWeight: '400',
-            lineHeight: '1.2'
-          }}>
+          <h1
+            style={{
+              fontSize: '48px',
+              fontFamily: 'Georgia, serif',
+              fontWeight: 'normal',
+              marginBottom: '30px',
+            }}
+          >
             Seni dalam Berpakaian
           </h1>
-          <p style={{
-            fontSize: '16px',
-            color: 'rgba(255,255,255,0.8)',
-            lineHeight: '1.9',
-            maxWidth: '550px',
-            margin: '0 auto'
-          }}>
+          <p
+            style={{
+              fontSize: '16px',
+              maxWidth: '500px',
+              margin: '0 auto',
+              lineHeight: '1.8',
+              opacity: 0.85,
+            }}
+          >
             Didirikan pada tahun 2020, NOIR Collective lahir dari keinginan untuk menciptakan fashion yang menghormati manusia dan planet.
           </p>
         </div>
-      </section>
+      </div>
 
-      {/* Story Section */}
-      <section style={{ padding: '140px 24px', backgroundColor: '#f8f6f3' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '80px', alignItems: 'center' }}>
-            {/* Image */}
-            <div style={{ flex: '1 1 400px', maxWidth: '500px' }}>
-              <div style={{ position: 'relative', width: '100%', paddingBottom: '125%' }}>
-                <Image
-                  src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1000&q=80"
-                  alt="Craftsmanship"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Content */}
-            <div style={{ flex: '1 1 400px', maxWidth: '550px' }}>
-              <p style={{
+      {/* Story */}
+      <div style={{ backgroundColor: '#f8f6f3', padding: '100px 20px' }}>
+        <div
+          style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '60px',
+            alignItems: 'center',
+          }}
+        >
+          <div style={{ position: 'relative', height: '500px' }}>
+            <Image
+              src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80"
+              alt="Craftsmanship"
+              fill
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
+          <div>
+            <p
+              style={{
                 fontSize: '11px',
                 letterSpacing: '4px',
                 textTransform: 'uppercase',
                 color: '#c9a962',
-                marginBottom: '24px',
-                fontWeight: '500'
-              }}>
-                Awal Mula Kami
-              </p>
-              <h2 style={{
-                fontSize: '36px',
+                marginBottom: '20px',
+              }}
+            >
+              Awal Mula Kami
+            </p>
+            <h2
+              style={{
+                fontSize: '32px',
                 fontFamily: 'Georgia, serif',
-                marginBottom: '40px',
-                fontWeight: '400',
-                lineHeight: '1.3',
-                color: '#1a1a1a'
-              }}>
-                Lebih sedikit, tapi lebih baik.
-              </h2>
-              <div style={{ color: '#666666', lineHeight: '1.9', fontSize: '15px' }}>
-                <p style={{ marginBottom: '28px' }}>
-                  NOIR Collective didirikan dengan keyakinan sederhana: bahwa fashion harus timeless, bukan sementara. Di dunia fast fashion dan tren yang berlalu, kami memilih jalan berbeda—jalan kesengajaan, kualitas, dan kreasi sadar.
-                </p>
-                <p style={{ marginBottom: '28px' }}>
-                  Pendiri kami, Maya Hartono, menghabiskan bertahun-tahun bekerja di industri fashion sebelum menyadari perlunya perubahan. Dampak lingkungan dari produksi pakaian, eksploitasi pekerja garmen, dan sifat sekali pakai fashion modern menuntut pendekatan baru.
-                </p>
-                <p>
-                  Hari ini, NOIR Collective mewakili pertemuan antara kemewahan dan tanggung jawab. Setiap potongan dalam koleksi kami dirancang untuk dipakai, dicintai, dan disimpan—bukan dibuang setelah satu musim.
-                </p>
-              </div>
-            </div>
+                fontWeight: 'normal',
+                marginBottom: '30px',
+                color: '#1a1a1a',
+              }}
+            >
+              Lebih sedikit, tapi lebih baik.
+            </h2>
+            <p
+              style={{
+                fontSize: '15px',
+                lineHeight: '1.9',
+                color: '#666',
+                marginBottom: '20px',
+              }}
+            >
+              NOIR Collective didirikan dengan keyakinan sederhana: bahwa fashion harus timeless, bukan sementara. Di dunia fast fashion dan tren yang berlalu, kami memilih jalan berbeda.
+            </p>
+            <p
+              style={{
+                fontSize: '15px',
+                lineHeight: '1.9',
+                color: '#666',
+                marginBottom: '20px',
+              }}
+            >
+              Pendiri kami, Maya Hartono, menghabiskan bertahun-tahun bekerja di industri fashion sebelum menyadari perlunya perubahan.
+            </p>
+            <p
+              style={{
+                fontSize: '15px',
+                lineHeight: '1.9',
+                color: '#666',
+              }}
+            >
+              Hari ini, NOIR Collective mewakili pertemuan antara kemewahan dan tanggung jawab.
+            </p>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Values Section */}
-      <section style={{ padding: '140px 24px', backgroundColor: 'white' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-            <p style={{
-              fontSize: '11px',
-              letterSpacing: '4px',
-              textTransform: 'uppercase',
-              color: '#999999',
-              marginBottom: '20px',
-              fontWeight: '500'
-            }}>
+      {/* Values */}
+      <div style={{ backgroundColor: 'white', padding: '100px 20px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <p
+              style={{
+                fontSize: '11px',
+                letterSpacing: '4px',
+                textTransform: 'uppercase',
+                color: '#999',
+                marginBottom: '15px',
+              }}
+            >
               Yang Memandu Kami
             </p>
-            <h2 style={{
-              fontSize: '36px',
-              fontFamily: 'Georgia, serif',
-              fontWeight: '400',
-              color: '#1a1a1a'
-            }}>
+            <h2
+              style={{
+                fontSize: '32px',
+                fontFamily: 'Georgia, serif',
+                fontWeight: 'normal',
+                color: '#1a1a1a',
+              }}
+            >
               Nilai-Nilai Kami
             </h2>
           </div>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'center' }}>
-            {values.map((value, index) => (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '20px',
+            }}
+          >
+            {[
+              { num: '01', title: 'Desain Sadar', desc: 'Setiap potongan dirancang dengan penuh pertimbangan.' },
+              { num: '02', title: 'Produksi Etis', desc: 'Kami bermitra dengan pengrajin yang berbagi komitmen.' },
+              { num: '03', title: 'Bahan Berkualitas', desc: 'Kami mencari kain terbaik dari pemasok bersertifikat.' },
+              { num: '04', title: 'Estetika Timeless', desc: 'Desain kami merangkul minimalis dan keanggunan.' },
+            ].map((item) => (
               <div
-                key={index}
+                key={item.num}
                 style={{
-                  flex: '1 1 260px',
-                  maxWidth: '280px',
                   textAlign: 'center',
-                  padding: '48px 32px',
-                  border: '1px solid #e8e8e8',
-                  backgroundColor: 'white',
+                  padding: '40px 25px',
+                  border: '1px solid #eee',
                 }}
               >
                 <div
                   style={{
-                    width: '52px',
-                    height: '52px',
+                    width: '50px',
+                    height: '50px',
                     border: '1px solid #c9a962',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    margin: '0 auto 28px',
+                    margin: '0 auto 25px',
                     fontFamily: 'Georgia, serif',
-                    fontSize: '16px',
+                    fontSize: '14px',
                     color: '#c9a962',
                   }}
                 >
-                  {String(index + 1).padStart(2, '0')}
+                  {item.num}
                 </div>
-                <h3 style={{
-                  fontSize: '17px',
-                  fontFamily: 'Georgia, serif',
-                  marginBottom: '16px',
-                  fontWeight: '400',
-                  color: '#1a1a1a'
-                }}>
-                  {value.title}
+                <h3
+                  style={{
+                    fontSize: '16px',
+                    fontFamily: 'Georgia, serif',
+                    fontWeight: 'normal',
+                    marginBottom: '12px',
+                    color: '#1a1a1a',
+                  }}
+                >
+                  {item.title}
                 </h3>
-                <p style={{ fontSize: '14px', color: '#777777', lineHeight: '1.8' }}>
-                  {value.description}
+                <p style={{ fontSize: '13px', color: '#888', lineHeight: '1.7' }}>
+                  {item.desc}
                 </p>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Team Section */}
-      <section style={{ padding: '140px 24px', backgroundColor: '#f8f6f3' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '80px' }}>
-            <p style={{
-              fontSize: '11px',
-              letterSpacing: '4px',
-              textTransform: 'uppercase',
-              color: '#999999',
-              marginBottom: '20px',
-              fontWeight: '500'
-            }}>
+      {/* Team */}
+      <div style={{ backgroundColor: '#f8f6f3', padding: '100px 20px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <p
+              style={{
+                fontSize: '11px',
+                letterSpacing: '4px',
+                textTransform: 'uppercase',
+                color: '#999',
+                marginBottom: '15px',
+              }}
+            >
               Kolektif
             </p>
-            <h2 style={{
-              fontSize: '36px',
-              fontFamily: 'Georgia, serif',
-              fontWeight: '400',
-              color: '#1a1a1a'
-            }}>
+            <h2
+              style={{
+                fontSize: '32px',
+                fontFamily: 'Georgia, serif',
+                fontWeight: 'normal',
+                color: '#1a1a1a',
+              }}
+            >
               Tim Kami
             </h2>
           </div>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '48px', justifyContent: 'center' }}>
-            {team.map((member) => (
-              <div key={member.name} style={{ flex: '1 1 250px', maxWidth: '280px', textAlign: 'center' }}>
-                <div style={{ position: 'relative', width: '100%', paddingBottom: '100%', marginBottom: '28px', overflow: 'hidden' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '40px',
+            }}
+          >
+            {[
+              { name: 'Maya Hartono', role: 'Founder & Creative Director', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80' },
+              { name: 'David Chen', role: 'Head of Design', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80' },
+              { name: 'Sarah Kim', role: 'Sustainability Director', img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80' },
+            ].map((member) => (
+              <div key={member.name} style={{ textAlign: 'center' }}>
+                <div style={{ position: 'relative', height: '280px', marginBottom: '25px' }}>
                   <Image
-                    src={member.image}
+                    src={member.img}
                     alt={member.name}
                     fill
-                    className="object-cover"
-                    style={{ filter: 'grayscale(100%)' }}
+                    style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
                   />
                 </div>
-                <h3 style={{
-                  fontSize: '17px',
-                  fontFamily: 'Georgia, serif',
-                  marginBottom: '8px',
-                  fontWeight: '400',
-                  color: '#1a1a1a'
-                }}>
+                <h3
+                  style={{
+                    fontSize: '16px',
+                    fontFamily: 'Georgia, serif',
+                    fontWeight: 'normal',
+                    marginBottom: '5px',
+                    color: '#1a1a1a',
+                  }}
+                >
                   {member.name}
                 </h3>
-                <p style={{ fontSize: '13px', color: '#888888', letterSpacing: '0.5px' }}>
-                  {member.role}
-                </p>
+                <p style={{ fontSize: '12px', color: '#888' }}>{member.role}</p>
               </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* CTA Section */}
-      <section
+      {/* CTA */}
+      <div
         style={{
-          padding: '140px 24px',
           backgroundColor: '#1a1a1a',
-          color: 'white',
+          padding: '100px 20px',
           textAlign: 'center',
         }}
       >
-        <div style={{ maxWidth: '550px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: '36px',
-            fontFamily: 'Georgia, serif',
-            marginBottom: '28px',
-            fontWeight: '400',
-            lineHeight: '1.3'
-          }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+          <h2
+            style={{
+              fontSize: '32px',
+              fontFamily: 'Georgia, serif',
+              fontWeight: 'normal',
+              color: 'white',
+              marginBottom: '25px',
+            }}
+          >
             Bergabung dalam Perjalanan Kami
           </h2>
-          <p style={{
-            color: '#999999',
-            marginBottom: '56px',
-            fontSize: '15px',
-            lineHeight: '1.9'
-          }}>
-            Temukan komitmen kami terhadap fashion berkelanjutan dan jelajahi koleksi yang mendefinisikan kemewahan sadar.
+          <p
+            style={{
+              fontSize: '15px',
+              color: '#999',
+              lineHeight: '1.8',
+              marginBottom: '40px',
+            }}
+          >
+            Temukan komitmen kami terhadap fashion berkelanjutan.
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
+          <div>
             <Link
               href="/sustainability"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '18px 48px',
-                backgroundColor: 'transparent',
+                display: 'inline-block',
+                padding: '15px 40px',
+                border: '1px solid rgba(255,255,255,0.3)',
                 color: 'white',
+                textDecoration: 'none',
                 fontSize: '11px',
-                fontWeight: '500',
                 letterSpacing: '2px',
                 textTransform: 'uppercase',
-                textDecoration: 'none',
-                border: '1px solid rgba(255,255,255,0.25)',
-                transition: 'all 0.3s ease',
+                marginRight: '15px',
+                marginBottom: '15px',
               }}
             >
-              Keberlanjutan Kami
+              Keberlanjutan
             </Link>
             <Link
               href="/collections"
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '18px 48px',
+                display: 'inline-block',
+                padding: '15px 40px',
                 backgroundColor: '#c9a962',
                 color: '#1a1a1a',
+                textDecoration: 'none',
                 fontSize: '11px',
-                fontWeight: '500',
                 letterSpacing: '2px',
                 textTransform: 'uppercase',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
               }}
             >
-              Jelajahi Koleksi
+              Koleksi
             </Link>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Responsive styles */}
+      {/* Mobile Responsive */}
       <style jsx global>{`
-        @media (max-width: 768px) {
-          section > div > div[style*="flex-wrap"] {
-            flex-direction: column;
-            align-items: center;
+        @media (max-width: 900px) {
+          div[style*="gridTemplateColumns: repeat(4"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          div[style*="gridTemplateColumns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 600px) {
+          div[style*="gridTemplateColumns: repeat(4"] {
+            grid-template-columns: 1fr !important;
+          }
+          div[style*="gridTemplateColumns: repeat(3"] {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
-    </div>
+    </>
   );
 }
