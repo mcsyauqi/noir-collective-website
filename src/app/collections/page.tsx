@@ -1,96 +1,88 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
 import { collections } from '@/data/collections';
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function CollectionsPage() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.collection-card', {
-        y: 80,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.collections-list',
-          start: 'top 75%',
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <div ref={sectionRef} className="pt-[120px] pb-20 min-h-screen">
-      <div className="container-fluid">
+    <div style={{ paddingTop: '140px', paddingBottom: '80px', minHeight: '100vh', backgroundColor: '#f8f6f3' }}>
+      <div className="container">
         {/* Page Header */}
-        <div className="text-center mb-16 md:mb-24">
-          <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-3">
-            Explore
+        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+          <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#888888', marginBottom: '16px' }}>
+            Jelajahi
           </p>
-          <h1 className="text-4xl md:text-6xl font-serif mb-6">Our Collections</h1>
-          <p className="text-warm-gray max-w-lg mx-auto">
-            Discover thoughtfully curated collections designed for the modern
-            wardrobe. Each piece tells a story of craftsmanship and conscious design.
+          <h1 style={{ fontSize: 'clamp(36px, 6vw, 56px)', fontFamily: 'Georgia, serif', marginBottom: '24px' }}>
+            Koleksi Kami
+          </h1>
+          <p style={{ color: '#888888', maxWidth: '600px', margin: '0 auto', lineHeight: '1.8' }}>
+            Temukan koleksi yang dikurasi dengan penuh pertimbangan untuk lemari pakaian modern.
+            Setiap potongan menceritakan kisah keahlian dan desain sadar.
           </p>
         </div>
 
-        {/* Collections Grid */}
-        <div className="collections-list space-y-20 md:space-y-32">
+        {/* Collections List */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '120px' }}>
           {collections.map((collection, index) => (
             <div
               key={collection.id}
-              className={`collection-card grid md:grid-cols-2 gap-8 md:gap-16 items-center ${
-                index % 2 === 1 ? 'md:flex-row-reverse' : ''
-              }`}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '64px',
+                alignItems: 'center',
+              }}
             >
               {/* Image */}
               <Link
                 href={`/collections/${collection.slug}`}
-                className={`relative aspect-[4/5] overflow-hidden group ${
-                  index % 2 === 1 ? 'md:order-2' : ''
-                }`}
+                style={{
+                  position: 'relative',
+                  aspectRatio: '4/5',
+                  overflow: 'hidden',
+                  order: index % 2 === 1 ? 2 : 1,
+                }}
               >
                 <Image
                   src={collection.heroImage}
                   alt={collection.name}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-noir-black/0 group-hover:bg-noir-black/20 transition-colors duration-300" />
               </Link>
 
               {/* Content */}
-              <div className={index % 2 === 1 ? 'md:order-1' : ''}>
-                <p className="text-xs tracking-[0.15em] uppercase text-gold-accent mb-3">
+              <div style={{ order: index % 2 === 1 ? 1 : 2 }}>
+                <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#c9a962', marginBottom: '16px' }}>
                   {collection.season} {collection.year}
                 </p>
-                <h2 className="text-3xl md:text-5xl font-serif mb-4">
+                <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
                   {collection.name}
                 </h2>
-                <p className="text-lg text-warm-gray mb-4">
+                <p style={{ fontSize: '18px', color: '#888888', marginBottom: '16px', fontStyle: 'italic' }}>
                   &quot;{collection.tagline}&quot;
                 </p>
-                <p className="text-warm-gray leading-relaxed mb-8">
+                <p style={{ color: '#888888', lineHeight: '1.8', marginBottom: '32px' }}>
                   {collection.description}
                 </p>
                 <Link
                   href={`/collections/${collection.slug}`}
-                  className="inline-flex items-center gap-2 text-sm tracking-[0.1em] uppercase hover:text-warm-gray transition-colors group"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    textDecoration: 'none',
+                    color: '#1a1a1a',
+                  }}
                 >
-                  Explore Collection
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  Jelajahi Koleksi
+                  <ArrowRight size={16} />
                 </Link>
               </div>
             </div>

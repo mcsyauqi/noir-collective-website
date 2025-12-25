@@ -3,16 +3,15 @@
 import { useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
 import { products } from '@/data/products';
 import { categories, getCategoryBySlug } from '@/data/collections';
-import ProductCard from '@/components/product/ProductCard';
-import { cn } from '@/lib/utils';
 
 const sortOptions = [
-  { label: 'Newest', value: 'newest' },
-  { label: 'Price: Low to High', value: 'price-asc' },
-  { label: 'Price: High to Low', value: 'price-desc' },
+  { label: 'Terbaru', value: 'newest' },
+  { label: 'Harga: Rendah ke Tinggi', value: 'price-asc' },
+  { label: 'Harga: Tinggi ke Rendah', value: 'price-desc' },
 ];
 
 export default function CategoryPage() {
@@ -21,6 +20,14 @@ export default function CategoryPage() {
   const category = getCategoryBySlug(categorySlug);
 
   const [sortBy, setSortBy] = useState('newest');
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price * 15000);
+  };
 
   const categoryProducts = useMemo(() => {
     let result = products.filter((p) => p.category === categorySlug);
@@ -42,11 +49,25 @@ export default function CategoryPage() {
 
   if (!category) {
     return (
-      <div className="pt-[120px] pb-20 min-h-screen">
-        <div className="container-fluid text-center">
-          <h1 className="text-4xl font-serif mb-4">Category Not Found</h1>
-          <Link href="/shop" className="btn-primary">
-            Back to Shop
+      <div style={{ paddingTop: '140px', paddingBottom: '80px', minHeight: '100vh', backgroundColor: '#f8f6f3' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <h1 style={{ fontSize: '40px', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
+            Kategori Tidak Ditemukan
+          </h1>
+          <Link
+            href="/shop"
+            style={{
+              display: 'inline-block',
+              padding: '16px 40px',
+              backgroundColor: '#1a1a1a',
+              color: 'white',
+              fontSize: '12px',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+            }}
+          >
+            Kembali ke Toko
           </Link>
         </div>
       </div>
@@ -54,48 +75,56 @@ export default function CategoryPage() {
   }
 
   return (
-    <div className="pt-[120px] pb-20 min-h-screen">
-      <div className="container-fluid">
+    <div style={{ paddingTop: '140px', paddingBottom: '80px', minHeight: '100vh', backgroundColor: '#f8f6f3' }}>
+      <div className="container">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-warm-gray mb-8">
-          <Link href="/" className="hover:text-noir-black transition-colors">
-            Home
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#888888', marginBottom: '32px', flexWrap: 'wrap' }}>
+          <Link href="/" style={{ textDecoration: 'none', color: '#888888' }}>
+            Beranda
           </Link>
-          <ChevronRight className="w-4 h-4" />
-          <Link href="/shop" className="hover:text-noir-black transition-colors">
-            Shop
+          <ChevronRight size={16} />
+          <Link href="/shop" style={{ textDecoration: 'none', color: '#888888' }}>
+            Belanja
           </Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-noir-black">{category.name}</span>
+          <ChevronRight size={16} />
+          <span style={{ color: '#1a1a1a' }}>{category.name}</span>
         </nav>
 
         {/* Page Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-serif mb-4">{category.name}</h1>
-          <p className="text-warm-gray max-w-lg">{category.description}</p>
+        <div style={{ marginBottom: '48px' }}>
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
+            {category.name}
+          </h1>
+          <p style={{ color: '#888888', maxWidth: '500px' }}>{category.description}</p>
         </div>
 
         {/* Category Navigation */}
-        <div className="flex flex-wrap gap-3 mb-8 pb-6 border-b border-warm-gray/20">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '32px', paddingBottom: '24px', borderBottom: '1px solid #e5e5e5' }}>
           <Link
             href="/shop"
-            className={cn(
-              'px-4 py-2 text-sm border transition-colors',
-              'border-warm-gray/30 hover:border-noir-black'
-            )}
+            style={{
+              padding: '8px 16px',
+              fontSize: '14px',
+              border: '1px solid #e5e5e5',
+              textDecoration: 'none',
+              color: '#1a1a1a',
+              backgroundColor: 'white',
+            }}
           >
-            All
+            Semua
           </Link>
           {categories.map((cat) => (
             <Link
               key={cat.id}
               href={`/shop/${cat.slug}`}
-              className={cn(
-                'px-4 py-2 text-sm border transition-colors',
-                cat.slug === categorySlug
-                  ? 'border-noir-black bg-noir-black text-pure-white'
-                  : 'border-warm-gray/30 hover:border-noir-black'
-              )}
+              style={{
+                padding: '8px 16px',
+                fontSize: '14px',
+                border: cat.slug === categorySlug ? '1px solid #1a1a1a' : '1px solid #e5e5e5',
+                backgroundColor: cat.slug === categorySlug ? '#1a1a1a' : 'white',
+                color: cat.slug === categorySlug ? 'white' : '#1a1a1a',
+                textDecoration: 'none',
+              }}
             >
               {cat.name}
             </Link>
@@ -103,14 +132,20 @@ export default function CategoryPage() {
         </div>
 
         {/* Toolbar */}
-        <div className="flex items-center justify-between gap-4 mb-8">
-          <p className="text-sm text-warm-gray">
-            {categoryProducts.length} products
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '32px' }}>
+          <p style={{ fontSize: '14px', color: '#888888' }}>
+            {categoryProducts.length} produk
           </p>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="text-sm bg-transparent border-none outline-none cursor-pointer"
+            style={{
+              fontSize: '14px',
+              padding: '8px 16px',
+              border: '1px solid #e5e5e5',
+              backgroundColor: 'white',
+              cursor: 'pointer',
+            }}
           >
             {sortOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -122,16 +157,81 @@ export default function CategoryPage() {
 
         {/* Product Grid */}
         {categoryProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: '24px',
+            }}
+          >
             {categoryProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <Link
+                key={product.id}
+                href={`/product/${product.slug}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <div
+                  style={{
+                    position: 'relative',
+                    aspectRatio: '3/4',
+                    marginBottom: '16px',
+                    overflow: 'hidden',
+                    backgroundColor: '#e5e5e5',
+                  }}
+                >
+                  <Image
+                    src={product.images[0]}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  {product.badge && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        top: '16px',
+                        left: '16px',
+                        padding: '6px 12px',
+                        backgroundColor: product.badge === 'new' ? '#1a1a1a' : '#c9a962',
+                        color: product.badge === 'new' ? 'white' : '#1a1a1a',
+                        fontSize: '10px',
+                        letterSpacing: '1px',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {product.badge === 'new' ? 'Baru' : 'Terbatas'}
+                    </span>
+                  )}
+                </div>
+                <h3 style={{ fontSize: '16px', fontWeight: '400', marginBottom: '8px' }}>
+                  {product.name}
+                </h3>
+                <p style={{ fontSize: '14px', color: '#888888' }}>
+                  {formatPrice(product.price)}
+                </p>
+              </Link>
             ))}
           </div>
         ) : (
-          <div className="text-center py-20">
-            <p className="text-warm-gray mb-4">No products in this category yet</p>
-            <Link href="/shop" className="btn-primary">
-              Browse All Products
+          <div style={{ textAlign: 'center', padding: '80px 0' }}>
+            <p style={{ color: '#888888', marginBottom: '16px' }}>
+              Belum ada produk di kategori ini
+            </p>
+            <Link
+              href="/shop"
+              style={{
+                display: 'inline-block',
+                padding: '16px 40px',
+                backgroundColor: '#1a1a1a',
+                color: 'white',
+                fontSize: '12px',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+              }}
+            >
+              Jelajahi Semua Produk
             </Link>
           </div>
         )}

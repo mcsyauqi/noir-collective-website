@@ -1,62 +1,57 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Leaf, Recycle, Heart, Globe, Award, Droplets } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const initiatives = [
   {
     icon: Leaf,
-    title: 'Organic Materials',
+    title: 'Bahan Organik',
     description:
-      'We prioritize GOTS-certified organic cotton, linen, and other natural fibers that are grown without harmful pesticides.',
+      'Kami mengutamakan kapas organik bersertifikat GOTS, linen, dan serat alami lainnya yang ditanam tanpa pestisida berbahaya.',
     stat: '78%',
-    statLabel: 'Organic Materials',
+    statLabel: 'Bahan Organik',
   },
   {
     icon: Recycle,
-    title: 'Recycled Fabrics',
+    title: 'Kain Daur Ulang',
     description:
-      'Our collections incorporate recycled wool, cashmere, and polyester, giving new life to existing materials.',
+      'Koleksi kami menggabungkan wol, kasmir, dan poliester daur ulang, memberikan kehidupan baru pada material yang ada.',
     stat: '35%',
-    statLabel: 'Recycled Content',
+    statLabel: 'Konten Daur Ulang',
   },
   {
     icon: Droplets,
-    title: 'Water Conservation',
+    title: 'Konservasi Air',
     description:
-      'Our manufacturing partners use innovative dyeing techniques that reduce water consumption by up to 90%.',
-    stat: '50M',
-    statLabel: 'Liters Saved',
+      'Mitra manufaktur kami menggunakan teknik pewarnaan inovatif yang mengurangi konsumsi air hingga 90%.',
+    stat: '50JT',
+    statLabel: 'Liter Terhemat',
   },
   {
     icon: Globe,
-    title: 'Carbon Neutral',
+    title: 'Netral Karbon',
     description:
-      'We offset our carbon emissions through verified reforestation projects and renewable energy investments.',
+      'Kami mengimbangi emisi karbon melalui proyek reboisasi terverifikasi dan investasi energi terbarukan.',
     stat: '100%',
-    statLabel: 'Carbon Offset',
+    statLabel: 'Karbon Offset',
   },
   {
     icon: Heart,
-    title: 'Fair Wages',
+    title: 'Upah Adil',
     description:
-      'Every worker in our supply chain receives fair wages, safe working conditions, and access to healthcare.',
-    stat: '2,000+',
-    statLabel: 'Artisans Supported',
+      'Setiap pekerja dalam rantai pasokan kami menerima upah yang adil, kondisi kerja yang aman, dan akses ke layanan kesehatan.',
+    stat: '2.000+',
+    statLabel: 'Pengrajin Didukung',
   },
   {
     icon: Award,
-    title: 'Certified Partners',
+    title: 'Mitra Bersertifikat',
     description:
-      'We work exclusively with factories certified by OEKO-TEX, GOTS, and Fair Trade organizations.',
+      'Kami bekerja eksklusif dengan pabrik bersertifikat OEKO-TEX, GOTS, dan organisasi Fair Trade.',
     stat: '100%',
-    statLabel: 'Certified Suppliers',
+    statLabel: 'Pemasok Bersertifikat',
   },
 ];
 
@@ -68,50 +63,19 @@ const certifications = [
 ];
 
 export default function SustainabilityPage() {
-  const pageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.hero-content > *', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'power3.out',
-        delay: 0.3,
-      });
-
-      gsap.from('.initiative-item', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.initiatives-grid',
-          start: 'top 75%',
-        },
-      });
-
-      gsap.from('.stat-number', {
-        textContent: 0,
-        duration: 2,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.initiatives-grid',
-          start: 'top 75%',
-        },
-      });
-    }, pageRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <div ref={pageRef}>
+    <div>
       {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
-        <div className="absolute inset-0 z-0">
+      <section
+        style={{
+          position: 'relative',
+          minHeight: '70vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Image
             src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1920&q=80"
             alt="Sustainable fashion"
@@ -119,55 +83,65 @@ export default function SustainabilityPage() {
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-noir-black/50" />
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)' }} />
         </div>
 
-        <div className="hero-content relative z-10 text-center text-pure-white px-6 max-w-3xl">
-          <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-4">
-            Our Commitment
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 10,
+            textAlign: 'center',
+            color: 'white',
+            padding: '0 24px',
+            maxWidth: '800px',
+          }}
+        >
+          <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#c9a962', marginBottom: '24px' }}>
+            Komitmen Kami
           </p>
-          <h1 className="text-4xl md:text-6xl font-serif mb-6">
-            Fashion with Purpose
+          <h1 style={{ fontSize: 'clamp(36px, 6vw, 56px)', fontFamily: 'Georgia, serif', marginBottom: '24px' }}>
+            Fashion dengan Tujuan
           </h1>
-          <p className="text-lg text-pure-white/80">
-            We believe luxury and sustainability are not mutually exclusive.
-            Every piece we create is designed to minimize environmental impact
-            while maximizing beauty and longevity.
+          <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.8' }}>
+            Kami percaya kemewahan dan keberlanjutan tidak saling eksklusif.
+            Setiap karya yang kami ciptakan dirancang untuk meminimalkan dampak lingkungan
+            sambil memaksimalkan keindahan dan daya tahan.
           </p>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 md:py-32 bg-off-white">
-        <div className="container-fluid">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+      <section style={{ padding: '120px 0', backgroundColor: '#f8f6f3' }}>
+        <div className="container">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '80px',
+              alignItems: 'center',
+            }}
+          >
             <div>
-              <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-4">
-                Our Mission
+              <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#c9a962', marginBottom: '24px' }}>
+                Misi Kami
               </p>
-              <h2 className="text-3xl md:text-4xl font-serif mb-6">
-                Redefining Luxury Fashion
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif', marginBottom: '32px' }}>
+                Mendefinisikan Ulang Fashion Mewah
               </h2>
-              <div className="space-y-4 text-warm-gray leading-relaxed">
-                <p>
-                  The fashion industry is one of the world&apos;s largest
-                  polluters. At NOIR Collective, we&apos;re committed to being
-                  part of the solution, not the problem.
+              <div style={{ color: '#888888', lineHeight: '1.8', fontSize: '16px' }}>
+                <p style={{ marginBottom: '24px' }}>
+                  Industri fashion adalah salah satu pencemar terbesar di dunia. Di NOIR Collective, kami berkomitmen untuk menjadi bagian dari solusi, bukan masalah.
+                </p>
+                <p style={{ marginBottom: '24px' }}>
+                  Dari mencari bahan organik dan daur ulang hingga bermitra dengan produsen etis, setiap keputusan yang kami buat mempertimbangkan dampaknya terhadap manusia dan planet.
                 </p>
                 <p>
-                  From sourcing organic and recycled materials to partnering
-                  with ethical manufacturers, every decision we make considers
-                  its impact on people and planet.
-                </p>
-                <p>
-                  Our goal is to prove that beautiful, high-quality fashion can
-                  be created responsibly—and that consumers don&apos;t have to
-                  compromise their values for style.
+                  Tujuan kami adalah membuktikan bahwa fashion yang indah dan berkualitas tinggi dapat diciptakan secara bertanggung jawab—dan konsumen tidak harus mengorbankan nilai-nilai mereka demi gaya.
                 </p>
               </div>
             </div>
 
-            <div className="relative aspect-square overflow-hidden">
+            <div style={{ position: 'relative', aspectRatio: '1', overflow: 'hidden' }}>
               <Image
                 src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&q=80"
                 alt="Sustainable materials"
@@ -180,34 +154,45 @@ export default function SustainabilityPage() {
       </section>
 
       {/* Initiatives Grid */}
-      <section className="py-20 md:py-32 bg-pure-white">
-        <div className="container-fluid">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-3">
-              Our Impact
+      <section style={{ padding: '120px 0', backgroundColor: 'white' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#888888', marginBottom: '16px' }}>
+              Dampak Kami
             </p>
-            <h2 className="text-3xl md:text-4xl font-serif">
-              Sustainability Initiatives
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif' }}>
+              Inisiatif Keberlanjutan
             </h2>
           </div>
 
-          <div className="initiatives-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '32px',
+            }}
+          >
             {initiatives.map((initiative, index) => (
               <div
                 key={index}
-                className="initiative-item p-8 border border-warm-gray/20 hover:border-gold-accent transition-colors"
+                style={{
+                  padding: '32px',
+                  border: '1px solid #e5e5e5',
+                }}
               >
-                <initiative.icon className="w-8 h-8 text-gold-accent mb-6" />
-                <div className="mb-4">
-                  <span className="stat-number text-4xl font-serif text-noir-black">
+                <initiative.icon size={32} style={{ color: '#c9a962', marginBottom: '24px' }} />
+                <div style={{ marginBottom: '16px' }}>
+                  <span style={{ fontSize: '36px', fontFamily: 'Georgia, serif', color: '#1a1a1a' }}>
                     {initiative.stat}
                   </span>
-                  <span className="text-sm text-warm-gray ml-2">
+                  <span style={{ fontSize: '14px', color: '#888888', marginLeft: '8px' }}>
                     {initiative.statLabel}
                   </span>
                 </div>
-                <h3 className="text-lg font-serif mb-3">{initiative.title}</h3>
-                <p className="text-sm text-warm-gray leading-relaxed">
+                <h3 style={{ fontSize: '18px', fontFamily: 'Georgia, serif', marginBottom: '12px' }}>
+                  {initiative.title}
+                </h3>
+                <p style={{ fontSize: '14px', color: '#888888', lineHeight: '1.8' }}>
                   {initiative.description}
                 </p>
               </div>
@@ -217,10 +202,17 @@ export default function SustainabilityPage() {
       </section>
 
       {/* Supply Chain Section */}
-      <section className="py-20 md:py-32 bg-noir-black text-pure-white">
-        <div className="container-fluid">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-            <div className="relative aspect-[4/5] overflow-hidden order-2 md:order-1">
+      <section style={{ padding: '120px 0', backgroundColor: '#1a1a1a', color: 'white' }}>
+        <div className="container">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '80px',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden' }}>
               <Image
                 src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&q=80"
                 alt="Artisan craftsmanship"
@@ -229,41 +221,48 @@ export default function SustainabilityPage() {
               />
             </div>
 
-            <div className="order-1 md:order-2">
-              <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-4">
-                Transparency
+            <div>
+              <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#c9a962', marginBottom: '24px' }}>
+                Transparansi
               </p>
-              <h2 className="text-3xl md:text-4xl font-serif mb-6">
-                Know Your Supply Chain
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif', marginBottom: '32px' }}>
+                Kenali Rantai Pasokan Anda
               </h2>
-              <div className="space-y-4 text-warm-gray leading-relaxed mb-8">
-                <p>
-                  We believe you have the right to know where your clothes come
-                  from. That&apos;s why we maintain complete transparency about
-                  our supply chain.
+              <div style={{ color: '#888888', lineHeight: '1.8', marginBottom: '32px' }}>
+                <p style={{ marginBottom: '16px' }}>
+                  Kami percaya Anda berhak tahu dari mana pakaian Anda berasal. Itulah mengapa kami menjaga transparansi penuh tentang rantai pasokan kami.
                 </p>
                 <p>
-                  Each garment can be traced back to its origins—from the farm
-                  where the cotton was grown to the artisan who sewed the final
-                  stitch.
+                  Setiap pakaian dapat dilacak kembali ke asalnya—dari pertanian tempat kapas ditanam hingga pengrajin yang menjahit jahitan terakhir.
                 </p>
               </div>
 
               {/* Journey Steps */}
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {[
-                  'Material Sourcing',
-                  'Fabric Production',
-                  'Design & Pattern Making',
-                  'Artisan Production',
-                  'Quality Control',
-                  'Sustainable Packaging',
+                  'Sumber Bahan',
+                  'Produksi Kain',
+                  'Desain & Pembuatan Pola',
+                  'Produksi Pengrajin',
+                  'Kontrol Kualitas',
+                  'Pengemasan Berkelanjutan',
                 ].map((step, index) => (
-                  <div key={index} className="flex items-center gap-4">
-                    <div className="w-8 h-8 border border-gold-accent flex items-center justify-center text-xs text-gold-accent">
+                  <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        border: '1px solid #c9a962',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '12px',
+                        color: '#c9a962',
+                      }}
+                    >
                       {String(index + 1).padStart(2, '0')}
                     </div>
-                    <span className="text-sm">{step}</span>
+                    <span style={{ fontSize: '14px' }}>{step}</span>
                   </div>
                 ))}
               </div>
@@ -273,28 +272,52 @@ export default function SustainabilityPage() {
       </section>
 
       {/* Certifications */}
-      <section className="py-20 md:py-32 bg-off-white">
-        <div className="container-fluid">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-3">
-              Verified Standards
+      <section style={{ padding: '120px 0', backgroundColor: '#f8f6f3' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#888888', marginBottom: '16px' }}>
+              Standar Terverifikasi
             </p>
-            <h2 className="text-3xl md:text-4xl font-serif">
-              Our Certifications
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif' }}>
+              Sertifikasi Kami
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '24px',
+              maxWidth: '900px',
+              margin: '0 auto',
+            }}
+          >
             {certifications.map((cert, index) => (
               <div
                 key={index}
-                className="text-center p-6 bg-pure-white border border-warm-gray/20"
+                style={{
+                  textAlign: 'center',
+                  padding: '32px 24px',
+                  backgroundColor: 'white',
+                  border: '1px solid #e5e5e5',
+                }}
               >
-                <div className="w-16 h-16 bg-off-white rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Award className="w-6 h-6 text-gold-accent" />
+                <div
+                  style={{
+                    width: '64px',
+                    height: '64px',
+                    backgroundColor: '#f8f6f3',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 16px',
+                  }}
+                >
+                  <Award size={24} style={{ color: '#c9a962' }} />
                 </div>
-                <h3 className="text-sm font-medium mb-1">{cert.name}</h3>
-                <p className="text-xs text-warm-gray">{cert.description}</p>
+                <h3 style={{ fontSize: '14px', fontWeight: '500', marginBottom: '4px' }}>{cert.name}</h3>
+                <p style={{ fontSize: '12px', color: '#888888' }}>{cert.description}</p>
               </div>
             ))}
           </div>
@@ -302,17 +325,29 @@ export default function SustainabilityPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-pure-white text-center">
-        <div className="container-fluid max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-serif mb-6">
-            Shop Consciously
+      <section style={{ padding: '120px 0', backgroundColor: 'white', textAlign: 'center' }}>
+        <div className="container" style={{ maxWidth: '600px' }}>
+          <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif', marginBottom: '24px' }}>
+            Belanja dengan Sadar
           </h2>
-          <p className="text-warm-gray mb-10">
-            Every purchase supports sustainable practices and ethical production.
-            Join us in creating a more responsible fashion industry.
+          <p style={{ color: '#888888', marginBottom: '48px', fontSize: '16px', lineHeight: '1.8' }}>
+            Setiap pembelian mendukung praktik berkelanjutan dan produksi etis.
+            Bergabunglah dengan kami dalam menciptakan industri fashion yang lebih bertanggung jawab.
           </p>
-          <Link href="/collections/conscious-collection" className="btn-primary">
-            Explore Conscious Collection
+          <Link
+            href="/collections"
+            style={{
+              display: 'inline-block',
+              padding: '20px 48px',
+              backgroundColor: '#1a1a1a',
+              color: 'white',
+              fontSize: '12px',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+            }}
+          >
+            Jelajahi Koleksi
           </Link>
         </div>
       </section>

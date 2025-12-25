@@ -1,33 +1,24 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const values = [
   {
-    title: 'Conscious Design',
-    description:
-      'Every piece is thoughtfully designed to transcend seasons and trends, ensuring longevity in both style and construction.',
+    title: 'Desain Sadar',
+    description: 'Setiap potongan dirancang dengan penuh pertimbangan untuk melampaui musim dan tren.',
   },
   {
-    title: 'Ethical Production',
-    description:
-      'We partner with artisans and manufacturers who share our commitment to fair wages, safe working conditions, and environmental responsibility.',
+    title: 'Produksi Etis',
+    description: 'Kami bermitra dengan pengrajin yang berbagi komitmen terhadap upah adil dan kondisi kerja yang aman.',
   },
   {
-    title: 'Quality Materials',
-    description:
-      'We source the finest fabrics from certified suppliers, prioritizing organic, recycled, and responsibly sourced materials.',
+    title: 'Bahan Berkualitas',
+    description: 'Kami mencari kain terbaik dari pemasok bersertifikat, mengutamakan bahan organik dan daur ulang.',
   },
   {
-    title: 'Timeless Aesthetic',
-    description:
-      'Our designs embrace minimalism and elegance, creating pieces that become cherished additions to your wardrobe for years to come.',
+    title: 'Estetika Timeless',
+    description: 'Desain kami merangkul minimalis dan keanggunan, menciptakan potongan yang bertahan lama.',
   },
 ];
 
@@ -50,63 +41,19 @@ const team = [
 ];
 
 export default function AboutPage() {
-  const pageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.hero-content > *', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'power3.out',
-        delay: 0.3,
-      });
-
-      gsap.from('.story-image', {
-        scale: 1.1,
-        duration: 1.5,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.story-section',
-          start: 'top 60%',
-          scrub: 1,
-        },
-      });
-
-      gsap.from('.value-item', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.values-section',
-          start: 'top 75%',
-        },
-      });
-
-      gsap.from('.team-member', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.team-section',
-          start: 'top 75%',
-        },
-      });
-    }, pageRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <div ref={pageRef}>
+    <div>
       {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
-        <div className="absolute inset-0 z-0">
+      <section
+        style={{
+          position: 'relative',
+          minHeight: '70vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Image
             src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=1920&q=80"
             alt="NOIR Collective atelier"
@@ -114,61 +61,67 @@ export default function AboutPage() {
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-noir-black/50" />
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)' }} />
         </div>
 
-        <div className="hero-content relative z-10 text-center text-pure-white px-6 max-w-3xl">
-          <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-4">
-            Our Story
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 10,
+            textAlign: 'center',
+            color: 'white',
+            padding: '0 24px',
+            maxWidth: '800px',
+          }}
+        >
+          <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#c9a962', marginBottom: '24px' }}>
+            Cerita Kami
           </p>
-          <h1 className="text-4xl md:text-6xl font-serif mb-6">
-            The Art of Getting Dressed
+          <h1 style={{ fontSize: 'clamp(36px, 6vw, 56px)', fontFamily: 'Georgia, serif', marginBottom: '24px' }}>
+            Seni dalam Berpakaian
           </h1>
-          <p className="text-lg text-pure-white/80">
-            Founded in 2020, NOIR Collective was born from a desire to create
-            fashion that respects both people and planet.
+          <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.8' }}>
+            Didirikan pada tahun 2020, NOIR Collective lahir dari keinginan untuk menciptakan fashion yang menghormati manusia dan planet.
           </p>
         </div>
       </section>
 
       {/* Story Section */}
-      <section className="story-section py-20 md:py-32 bg-off-white">
-        <div className="container-fluid">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-            <div className="relative aspect-[4/5] overflow-hidden">
+      <section style={{ padding: '120px 0', backgroundColor: '#f8f6f3' }}>
+        <div className="container">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '80px',
+              alignItems: 'center',
+            }}
+          >
+            <div style={{ position: 'relative', aspectRatio: '4/5' }}>
               <Image
                 src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1000&q=80"
                 alt="Craftsmanship"
                 fill
-                className="story-image object-cover"
+                className="object-cover"
               />
             </div>
 
             <div>
-              <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-4">
-                Our Beginning
+              <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#c9a962', marginBottom: '24px' }}>
+                Awal Mula Kami
               </p>
-              <h2 className="text-3xl md:text-4xl font-serif mb-6">
-                Less, but better.
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif', marginBottom: '32px' }}>
+                Lebih sedikit, tapi lebih baik.
               </h2>
-              <div className="space-y-4 text-warm-gray leading-relaxed">
-                <p>
-                  NOIR Collective was founded with a simple belief: that fashion
-                  should be timeless, not temporary. In a world of fast fashion
-                  and fleeting trends, we chose a different path—one of
-                  intentionality, quality, and conscious creation.
+              <div style={{ color: '#888888', lineHeight: '1.8', fontSize: '16px' }}>
+                <p style={{ marginBottom: '24px' }}>
+                  NOIR Collective didirikan dengan keyakinan sederhana: bahwa fashion harus timeless, bukan sementara. Di dunia fast fashion dan tren yang berlalu, kami memilih jalan berbeda—jalan kesengajaan, kualitas, dan kreasi sadar.
+                </p>
+                <p style={{ marginBottom: '24px' }}>
+                  Pendiri kami, Maya Hartono, menghabiskan bertahun-tahun bekerja di industri fashion sebelum menyadari perlunya perubahan. Dampak lingkungan dari produksi pakaian, eksploitasi pekerja garmen, dan sifat sekali pakai fashion modern menuntut pendekatan baru.
                 </p>
                 <p>
-                  Our founder, Maya Hartono, spent years working in the fashion
-                  industry before recognizing the need for change. The
-                  environmental impact of clothing production, the exploitation
-                  of garment workers, and the disposable nature of modern
-                  fashion demanded a new approach.
-                </p>
-                <p>
-                  Today, NOIR Collective represents the intersection of luxury
-                  and responsibility. Each piece in our collection is designed
-                  to be worn, loved, and kept—not discarded after a season.
+                  Hari ini, NOIR Collective mewakili pertemuan antara kemewahan dan tanggung jawab. Setiap potongan dalam koleksi kami dirancang untuk dipakai, dicintai, dan disimpan—bukan dibuang setelah satu musim.
                 </p>
               </div>
             </div>
@@ -177,28 +130,53 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="values-section py-20 md:py-32 bg-pure-white" id="craftsmanship">
-        <div className="container-fluid">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-3">
-              What Guides Us
+      <section style={{ padding: '120px 0', backgroundColor: 'white' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#888888', marginBottom: '16px' }}>
+              Yang Memandu Kami
             </p>
-            <h2 className="text-3xl md:text-4xl font-serif">Our Values</h2>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif' }}>
+              Nilai-Nilai Kami
+            </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '32px',
+            }}
+          >
             {values.map((value, index) => (
               <div
                 key={index}
-                className="value-item text-center p-6 border border-warm-gray/20 hover:border-gold-accent transition-colors"
+                style={{
+                  textAlign: 'center',
+                  padding: '40px 24px',
+                  border: '1px solid #e5e5e5',
+                }}
               >
-                <div className="w-12 h-12 border border-gold-accent flex items-center justify-center mx-auto mb-6">
-                  <span className="text-xl font-serif text-gold-accent">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
+                <div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    border: '1px solid #c9a962',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 24px',
+                    fontFamily: 'Georgia, serif',
+                    fontSize: '18px',
+                    color: '#c9a962',
+                  }}
+                >
+                  {String(index + 1).padStart(2, '0')}
                 </div>
-                <h3 className="text-lg font-serif mb-3">{value.title}</h3>
-                <p className="text-sm text-warm-gray leading-relaxed">
+                <h3 style={{ fontSize: '18px', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
+                  {value.title}
+                </h3>
+                <p style={{ fontSize: '14px', color: '#888888', lineHeight: '1.8' }}>
                   {value.description}
                 </p>
               </div>
@@ -208,28 +186,43 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section className="team-section py-20 md:py-32 bg-off-white">
-        <div className="container-fluid">
-          <div className="text-center mb-16">
-            <p className="text-xs tracking-[0.2em] uppercase text-warm-gray mb-3">
-              The Collective
+      <section style={{ padding: '120px 0', backgroundColor: '#f8f6f3' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#888888', marginBottom: '16px' }}>
+              Kolektif
             </p>
-            <h2 className="text-3xl md:text-4xl font-serif">Our Team</h2>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif' }}>
+              Tim Kami
+            </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '48px',
+              maxWidth: '900px',
+              margin: '0 auto',
+            }}
+          >
             {team.map((member) => (
-              <div key={member.name} className="team-member text-center">
-                <div className="relative aspect-square mb-6 overflow-hidden">
+              <div key={member.name} style={{ textAlign: 'center' }}>
+                <div style={{ position: 'relative', aspectRatio: '1', marginBottom: '24px', overflow: 'hidden' }}>
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
-                    className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    className="object-cover"
+                    style={{ filter: 'grayscale(100%)' }}
                   />
                 </div>
-                <h3 className="text-lg font-serif mb-1">{member.name}</h3>
-                <p className="text-sm text-warm-gray">{member.role}</p>
+                <h3 style={{ fontSize: '18px', fontFamily: 'Georgia, serif', marginBottom: '8px' }}>
+                  {member.name}
+                </h3>
+                <p style={{ fontSize: '14px', color: '#888888' }}>
+                  {member.role}
+                </p>
               </div>
             ))}
           </div>
@@ -237,27 +230,58 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-noir-black text-pure-white text-center">
-        <div className="container-fluid max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-serif mb-6">
-            Join Our Journey
+      <section
+        style={{
+          padding: '120px 0',
+          backgroundColor: '#1a1a1a',
+          color: 'white',
+          textAlign: 'center',
+        }}
+      >
+        <div className="container" style={{ maxWidth: '600px' }}>
+          <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif', marginBottom: '24px' }}>
+            Bergabung dalam Perjalanan Kami
           </h2>
-          <p className="text-warm-gray mb-10">
-            Discover our commitment to sustainable fashion and explore the
-            collections that define conscious luxury.
+          <p style={{ color: '#888888', marginBottom: '48px', fontSize: '16px', lineHeight: '1.8' }}>
+            Temukan komitmen kami terhadap fashion berkelanjutan dan jelajahi koleksi yang mendefinisikan kemewahan sadar.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
             <Link
               href="/sustainability"
-              className="btn-secondary border-pure-white text-pure-white hover:bg-pure-white hover:text-noir-black"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px 48px',
+                backgroundColor: 'transparent',
+                color: 'white',
+                fontSize: '12px',
+                fontWeight: '500',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                border: '1px solid rgba(255,255,255,0.3)',
+              }}
             >
-              Our Sustainability
+              Keberlanjutan Kami
             </Link>
             <Link
               href="/collections"
-              className="btn-primary bg-gold-accent text-noir-black border-gold-accent hover:bg-transparent hover:text-gold-accent"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px 48px',
+                backgroundColor: '#c9a962',
+                color: '#1a1a1a',
+                fontSize: '12px',
+                fontWeight: '500',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+              }}
             >
-              Explore Collections
+              Jelajahi Koleksi
             </Link>
           </div>
         </div>

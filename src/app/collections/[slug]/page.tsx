@@ -1,61 +1,46 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronRight } from 'lucide-react';
 import { getCollectionBySlug } from '@/data/collections';
 import { products } from '@/data/products';
-import ProductCard from '@/components/product/ProductCard';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function CollectionPage() {
   const params = useParams();
   const slug = params.slug as string;
   const collection = getCollectionBySlug(slug);
 
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!collection) return;
-
-    const ctx = gsap.context(() => {
-      gsap.from('.hero-content > *', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'power3.out',
-        delay: 0.3,
-      });
-
-      gsap.from('.product-item', {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.products-section',
-          start: 'top 80%',
-        },
-      });
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, [collection]);
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price * 15000);
+  };
 
   if (!collection) {
     return (
-      <div className="pt-[120px] pb-20 min-h-screen">
-        <div className="container-fluid text-center">
-          <h1 className="text-4xl font-serif mb-4">Collection Not Found</h1>
-          <Link href="/collections" className="btn-primary">
-            View All Collections
+      <div style={{ paddingTop: '140px', paddingBottom: '80px', minHeight: '100vh', backgroundColor: '#f8f6f3' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <h1 style={{ fontSize: '40px', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
+            Koleksi Tidak Ditemukan
+          </h1>
+          <Link
+            href="/collections"
+            style={{
+              display: 'inline-block',
+              padding: '16px 40px',
+              backgroundColor: '#1a1a1a',
+              color: 'white',
+              fontSize: '12px',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+            }}
+          >
+            Lihat Semua Koleksi
           </Link>
         </div>
       </div>
@@ -67,10 +52,18 @@ export default function CollectionPage() {
   );
 
   return (
-    <div ref={heroRef}>
+    <div>
       {/* Hero Section */}
-      <section className="relative h-[80vh] min-h-[600px] flex items-center justify-center">
-        <div className="absolute inset-0 z-0">
+      <section
+        style={{
+          position: 'relative',
+          minHeight: '80vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Image
             src={collection.heroImage}
             alt={collection.name}
@@ -78,67 +71,135 @@ export default function CollectionPage() {
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-noir-black/50" />
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)' }} />
         </div>
 
-        <div className="hero-content relative z-10 text-center text-pure-white px-6 max-w-3xl">
-          <p className="text-xs tracking-[0.2em] uppercase text-gold-accent mb-4">
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 10,
+            textAlign: 'center',
+            color: 'white',
+            padding: '0 24px',
+            maxWidth: '800px',
+          }}
+        >
+          <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#c9a962', marginBottom: '16px' }}>
             {collection.season} {collection.year}
           </p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif mb-6">
+          <h1 style={{ fontSize: 'clamp(40px, 8vw, 72px)', fontFamily: 'Georgia, serif', marginBottom: '24px' }}>
             {collection.name}
           </h1>
-          <p className="text-xl md:text-2xl text-accent mb-4">
+          <p style={{ fontSize: '20px', fontStyle: 'italic', marginBottom: '16px' }}>
             &quot;{collection.tagline}&quot;
           </p>
-          <p className="text-pure-white/80 max-w-lg mx-auto">
+          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.8)', maxWidth: '500px', margin: '0 auto' }}>
             {collection.description}
           </p>
         </div>
       </section>
 
       {/* Products Section */}
-      <section className="products-section py-20 md:py-32 bg-off-white">
-        <div className="container-fluid">
+      <section style={{ padding: '120px 0', backgroundColor: '#f8f6f3' }}>
+        <div className="container">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-warm-gray mb-12">
-            <Link href="/" className="hover:text-noir-black transition-colors">
-              Home
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#888888', marginBottom: '48px', flexWrap: 'wrap' }}>
+            <Link href="/" style={{ textDecoration: 'none', color: '#888888' }}>
+              Beranda
             </Link>
-            <ChevronRight className="w-4 h-4" />
-            <Link
-              href="/collections"
-              className="hover:text-noir-black transition-colors"
-            >
-              Collections
+            <ChevronRight size={16} />
+            <Link href="/collections" style={{ textDecoration: 'none', color: '#888888' }}>
+              Koleksi
             </Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-noir-black">{collection.name}</span>
+            <ChevronRight size={16} />
+            <span style={{ color: '#1a1a1a' }}>{collection.name}</span>
           </nav>
 
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif mb-4">
-              Shop the Collection
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
+              Belanja Koleksi
             </h2>
-            <p className="text-warm-gray">
-              {collectionProducts.length} pieces in this collection
+            <p style={{ color: '#888888' }}>
+              {collectionProducts.length} produk dalam koleksi ini
             </p>
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: '32px',
+            }}
+          >
             {collectionProducts.map((product) => (
-              <div key={product.id} className="product-item">
-                <ProductCard product={product} />
-              </div>
+              <Link
+                key={product.id}
+                href={`/product/${product.slug}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <div
+                  style={{
+                    position: 'relative',
+                    aspectRatio: '3/4',
+                    marginBottom: '16px',
+                    overflow: 'hidden',
+                    backgroundColor: '#e5e5e5',
+                  }}
+                >
+                  <Image
+                    src={product.images[0]}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  {product.badge && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        top: '16px',
+                        left: '16px',
+                        padding: '6px 12px',
+                        backgroundColor: product.badge === 'new' ? '#1a1a1a' : '#c9a962',
+                        color: product.badge === 'new' ? 'white' : '#1a1a1a',
+                        fontSize: '10px',
+                        letterSpacing: '1px',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {product.badge === 'new' ? 'Baru' : 'Terbatas'}
+                    </span>
+                  )}
+                </div>
+                <h3 style={{ fontSize: '16px', fontWeight: '400', marginBottom: '8px' }}>
+                  {product.name}
+                </h3>
+                <p style={{ fontSize: '14px', color: '#888888' }}>
+                  {formatPrice(product.price)}
+                </p>
+              </Link>
             ))}
           </div>
 
           {/* Lookbook CTA */}
-          <div className="text-center mt-16">
-            <Link href="/lookbook" className="btn-secondary">
-              View Lookbook
+          <div style={{ textAlign: 'center', marginTop: '64px' }}>
+            <Link
+              href="/lookbook"
+              style={{
+                display: 'inline-block',
+                padding: '16px 40px',
+                backgroundColor: 'transparent',
+                color: '#1a1a1a',
+                fontSize: '12px',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                border: '1px solid #1a1a1a',
+              }}
+            >
+              Lihat Lookbook
             </Link>
           </div>
         </div>

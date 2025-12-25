@@ -5,9 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Minus, Plus, X, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useCartStore } from '@/store/cart';
-import { formatPrice, cn } from '@/lib/utils';
-import { featuredProducts } from '@/data/products';
-import ProductCard from '@/components/product/ProductCard';
+import { products } from '@/data/products';
 
 export default function CartPage() {
   const [mounted, setMounted] = useState(false);
@@ -18,73 +16,126 @@ export default function CartPage() {
     useCartStore.persist.rehydrate();
   }, []);
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price * 15000);
+  };
+
   if (!mounted) {
     return (
-      <div className="pt-[120px] pb-20 min-h-screen">
-        <div className="container-fluid">
-          <div className="animate-pulse">
-            <div className="h-10 bg-warm-gray/20 w-48 mb-8" />
-            <div className="h-64 bg-warm-gray/20" />
-          </div>
+      <div style={{ paddingTop: '140px', paddingBottom: '80px', minHeight: '100vh', backgroundColor: '#f8f6f3' }}>
+        <div className="container">
+          <div style={{ height: '40px', backgroundColor: '#e5e5e5', width: '200px', marginBottom: '32px' }} />
+          <div style={{ height: '300px', backgroundColor: '#e5e5e5' }} />
         </div>
       </div>
     );
   }
 
   const total = getTotal();
-  const freeShippingThreshold = 500;
+  const freeShippingThreshold = 333; // ~5jt IDR
   const remainingForFreeShipping = freeShippingThreshold - total;
   const shippingCost = total >= freeShippingThreshold ? 0 : 25;
+  const featuredProducts = products.slice(0, 4);
 
   return (
-    <div className="pt-[120px] pb-20 min-h-screen">
-      <div className="container-fluid">
+    <div style={{ paddingTop: '140px', paddingBottom: '80px', minHeight: '100vh', backgroundColor: '#f8f6f3' }}>
+      <div className="container">
         {/* Page Header */}
-        <h1 className="text-3xl md:text-4xl font-serif mb-8">Shopping Bag</h1>
+        <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+          <p style={{ fontSize: '12px', letterSpacing: '4px', textTransform: 'uppercase', color: '#888888', marginBottom: '16px' }}>
+            Keranjang
+          </p>
+          <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontFamily: 'Georgia, serif' }}>
+            Tas Belanja
+          </h1>
+        </div>
 
         {items.length === 0 ? (
-          <div className="text-center py-20">
-            <ShoppingBag className="w-20 h-20 text-warm-gray/30 mx-auto mb-6" />
-            <h2 className="text-2xl font-serif mb-3">Your bag is empty</h2>
-            <p className="text-warm-gray mb-8">
-              Add something beautiful to your bag
+          <div style={{ textAlign: 'center', padding: '80px 0' }}>
+            <ShoppingBag size={80} style={{ color: '#e5e5e5', margin: '0 auto 24px' }} />
+            <h2 style={{ fontSize: '24px', fontFamily: 'Georgia, serif', marginBottom: '12px' }}>
+              Tas belanja Anda kosong
+            </h2>
+            <p style={{ color: '#888888', marginBottom: '32px' }}>
+              Tambahkan sesuatu yang indah ke dalam tas Anda
             </p>
-            <Link href="/shop" className="btn-primary">
-              Continue Shopping
+            <Link
+              href="/shop"
+              style={{
+                display: 'inline-block',
+                padding: '16px 40px',
+                backgroundColor: '#1a1a1a',
+                color: 'white',
+                fontSize: '12px',
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+              }}
+            >
+              Lanjut Belanja
             </Link>
 
             {/* Recommended Products */}
-            <div className="mt-20">
-              <h3 className="text-xl font-serif mb-8">You Might Like</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {featuredProducts.slice(0, 4).map((product) => (
-                  <ProductCard key={product.id} product={product} />
+            <div style={{ marginTop: '80px' }}>
+              <h3 style={{ fontSize: '20px', fontFamily: 'Georgia, serif', marginBottom: '32px' }}>
+                Anda Mungkin Suka
+              </h3>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                  gap: '24px',
+                }}
+              >
+                {featuredProducts.map((product) => (
+                  <Link
+                    key={product.id}
+                    href={`/product/${product.slug}`}
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <div style={{ position: 'relative', aspectRatio: '3/4', marginBottom: '16px', backgroundColor: '#e5e5e5' }}>
+                      <Image
+                        src={product.images[0]}
+                        alt={product.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <h4 style={{ fontSize: '14px', marginBottom: '4px' }}>{product.name}</h4>
+                    <p style={{ fontSize: '14px', color: '#888888' }}>{formatPrice(product.price)}</p>
+                  </Link>
                 ))}
               </div>
             </div>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '48px',
+              alignItems: 'start',
+            }}
+          >
             {/* Cart Items */}
-            <div className="lg:col-span-2">
+            <div style={{ gridColumn: 'span 2' }}>
               {/* Free Shipping Progress */}
               {remainingForFreeShipping > 0 && (
-                <div className="mb-8 p-4 bg-off-white">
-                  <p className="text-sm text-center mb-2">
-                    Add{' '}
-                    <span className="font-medium">
-                      {formatPrice(remainingForFreeShipping)}
-                    </span>{' '}
-                    more for free shipping
+                <div style={{ marginBottom: '32px', padding: '20px', backgroundColor: 'white' }}>
+                  <p style={{ fontSize: '14px', textAlign: 'center', marginBottom: '12px' }}>
+                    Tambah <span style={{ fontWeight: '500' }}>{formatPrice(remainingForFreeShipping)}</span> lagi untuk gratis ongkir
                   </p>
-                  <div className="h-1.5 bg-warm-gray/20 rounded-full overflow-hidden">
+                  <div style={{ height: '6px', backgroundColor: '#e5e5e5', borderRadius: '3px', overflow: 'hidden' }}>
                     <div
-                      className="h-full bg-gold-accent transition-all duration-500"
                       style={{
-                        width: `${Math.min(
-                          (total / freeShippingThreshold) * 100,
-                          100
-                        )}%`,
+                        height: '100%',
+                        backgroundColor: '#c9a962',
+                        width: `${Math.min((total / freeShippingThreshold) * 100, 100)}%`,
+                        transition: 'width 0.5s ease',
                       }}
                     />
                   </div>
@@ -92,24 +143,35 @@ export default function CartPage() {
               )}
 
               {remainingForFreeShipping <= 0 && (
-                <div className="mb-8 p-4 bg-noir-black text-pure-white text-center">
-                  <p className="text-sm tracking-[0.1em] uppercase">
-                    You&apos;ve unlocked free shipping!
+                <div style={{ marginBottom: '32px', padding: '16px', backgroundColor: '#1a1a1a', color: 'white', textAlign: 'center' }}>
+                  <p style={{ fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase' }}>
+                    Anda mendapat gratis ongkir!
                   </p>
                 </div>
               )}
 
               {/* Items */}
-              <div className="space-y-8">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
                 {items.map((item) => (
                   <div
                     key={`${item.product.id}-${item.size}-${item.color}`}
-                    className="flex gap-6 pb-8 border-b border-warm-gray/20"
+                    style={{
+                      display: 'flex',
+                      gap: '24px',
+                      paddingBottom: '32px',
+                      borderBottom: '1px solid #e5e5e5',
+                    }}
                   >
                     {/* Image */}
                     <Link
                       href={`/product/${item.product.slug}`}
-                      className="relative w-28 h-36 md:w-36 md:h-44 bg-off-white flex-shrink-0"
+                      style={{
+                        position: 'relative',
+                        width: '120px',
+                        height: '150px',
+                        flexShrink: 0,
+                        backgroundColor: '#e5e5e5',
+                      }}
                     >
                       <Image
                         src={item.product.images[0]}
@@ -120,66 +182,68 @@ export default function CartPage() {
                     </Link>
 
                     {/* Details */}
-                    <div className="flex-1 flex flex-col">
-                      <div className="flex justify-between">
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <div>
                           <Link
                             href={`/product/${item.product.slug}`}
-                            className="font-medium hover:text-warm-gray transition-colors"
+                            style={{ textDecoration: 'none', color: '#1a1a1a', fontWeight: '500' }}
                           >
                             {item.product.name}
                           </Link>
-                          <p className="text-sm text-warm-gray mt-1">
+                          <p style={{ fontSize: '14px', color: '#888888', marginTop: '4px' }}>
                             {item.color} / {item.size}
                           </p>
                         </div>
                         <button
-                          onClick={() =>
-                            removeItem(item.product.id, item.size, item.color)
-                          }
-                          className="text-warm-gray hover:text-noir-black transition-colors h-fit"
-                          aria-label="Remove item"
+                          onClick={() => removeItem(item.product.id, item.size, item.color)}
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#888888' }}
+                          aria-label="Hapus item"
                         >
-                          <X className="w-5 h-5" />
+                          <X size={20} />
                         </button>
                       </div>
 
-                      <div className="mt-auto flex items-end justify-between">
+                      <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
                         {/* Quantity */}
-                        <div className="flex items-center gap-3">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                           <button
-                            onClick={() =>
-                              updateQuantity(
-                                item.product.id,
-                                item.size,
-                                item.color,
-                                item.quantity - 1
-                              )
-                            }
-                            className="w-9 h-9 border border-warm-gray/30 flex items-center justify-center hover:border-noir-black transition-colors"
-                            aria-label="Decrease quantity"
+                            onClick={() => updateQuantity(item.product.id, item.size, item.color, item.quantity - 1)}
+                            style={{
+                              width: '36px',
+                              height: '36px',
+                              border: '1px solid #e5e5e5',
+                              backgroundColor: 'white',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                            aria-label="Kurangi jumlah"
                           >
-                            <Minus className="w-4 h-4" />
+                            <Minus size={16} />
                           </button>
-                          <span className="w-8 text-center">{item.quantity}</span>
+                          <span style={{ width: '32px', textAlign: 'center' }}>{item.quantity}</span>
                           <button
-                            onClick={() =>
-                              updateQuantity(
-                                item.product.id,
-                                item.size,
-                                item.color,
-                                item.quantity + 1
-                              )
-                            }
-                            className="w-9 h-9 border border-warm-gray/30 flex items-center justify-center hover:border-noir-black transition-colors"
-                            aria-label="Increase quantity"
+                            onClick={() => updateQuantity(item.product.id, item.size, item.color, item.quantity + 1)}
+                            style={{
+                              width: '36px',
+                              height: '36px',
+                              border: '1px solid #e5e5e5',
+                              backgroundColor: 'white',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                            aria-label="Tambah jumlah"
                           >
-                            <Plus className="w-4 h-4" />
+                            <Plus size={16} />
                           </button>
                         </div>
 
                         {/* Price */}
-                        <p className="font-medium">
+                        <p style={{ fontWeight: '500' }}>
                           {formatPrice(item.product.price * item.quantity)}
                         </p>
                       </div>
@@ -191,57 +255,77 @@ export default function CartPage() {
               {/* Continue Shopping */}
               <Link
                 href="/shop"
-                className="inline-flex items-center gap-2 text-sm mt-8 hover:text-warm-gray transition-colors"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '14px',
+                  marginTop: '32px',
+                  color: '#888888',
+                  textDecoration: 'none',
+                }}
               >
-                <ArrowRight className="w-4 h-4 rotate-180" />
-                Continue Shopping
+                <ArrowRight size={16} style={{ transform: 'rotate(180deg)' }} />
+                Lanjut Belanja
               </Link>
             </div>
 
             {/* Order Summary */}
-            <div className="lg:col-span-1">
-              <div className="bg-off-white p-8 sticky top-32">
-                <h2 className="text-lg font-serif mb-6">Order Summary</h2>
+            <div>
+              <div style={{ backgroundColor: 'white', padding: '32px', position: 'sticky', top: '140px' }}>
+                <h2 style={{ fontSize: '18px', fontFamily: 'Georgia, serif', marginBottom: '24px' }}>
+                  Ringkasan Pesanan
+                </h2>
 
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-warm-gray">Subtotal</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
+                    <span style={{ color: '#888888' }}>Subtotal</span>
                     <span>{formatPrice(total)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-warm-gray">Shipping</span>
-                    <span>
-                      {shippingCost === 0
-                        ? 'Free'
-                        : formatPrice(shippingCost)}
-                    </span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
+                    <span style={{ color: '#888888' }}>Ongkos Kirim</span>
+                    <span>{shippingCost === 0 ? 'Gratis' : formatPrice(shippingCost)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-warm-gray">Estimated Tax</span>
-                    <span>Calculated at checkout</span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
+                    <span style={{ color: '#888888' }}>Estimasi Pajak</span>
+                    <span>Dihitung saat checkout</span>
                   </div>
                 </div>
 
-                <div className="flex justify-between pt-6 border-t border-warm-gray/20 mb-8">
-                  <span className="font-medium">Total</span>
-                  <span className="text-xl font-serif">
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '24px', borderTop: '1px solid #e5e5e5', marginBottom: '32px' }}>
+                  <span style={{ fontWeight: '500' }}>Total</span>
+                  <span style={{ fontSize: '20px', fontFamily: 'Georgia, serif' }}>
                     {formatPrice(total + shippingCost)}
                   </span>
                 </div>
 
-                <Link href="/checkout" className="btn-primary w-full text-center">
-                  Proceed to Checkout
+                <Link
+                  href="/checkout"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    padding: '16px',
+                    backgroundColor: '#1a1a1a',
+                    color: 'white',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Lanjut ke Checkout
                 </Link>
 
                 {/* Payment Methods */}
-                <div className="mt-8 text-center">
-                  <p className="text-xs text-warm-gray mb-3">
-                    Secure checkout powered by
+                <div style={{ marginTop: '32px', textAlign: 'center' }}>
+                  <p style={{ fontSize: '12px', color: '#888888', marginBottom: '12px' }}>
+                    Pembayaran aman oleh
                   </p>
-                  <div className="flex justify-center gap-4">
-                    <span className="text-xs text-warm-gray">Visa</span>
-                    <span className="text-xs text-warm-gray">Mastercard</span>
-                    <span className="text-xs text-warm-gray">PayPal</span>
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
+                    <span style={{ fontSize: '12px', color: '#888888' }}>Visa</span>
+                    <span style={{ fontSize: '12px', color: '#888888' }}>Mastercard</span>
+                    <span style={{ fontSize: '12px', color: '#888888' }}>BCA</span>
                   </div>
                 </div>
               </div>

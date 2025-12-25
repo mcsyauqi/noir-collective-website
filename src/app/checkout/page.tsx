@@ -5,13 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronRight, ChevronDown, Lock, CreditCard } from 'lucide-react';
 import { useCartStore } from '@/store/cart';
-import { formatPrice, cn } from '@/lib/utils';
-
-type CheckoutStep = 'information' | 'shipping' | 'payment';
 
 export default function CheckoutPage() {
   const [mounted, setMounted] = useState(false);
-  const [currentStep, setCurrentStep] = useState<CheckoutStep>('information');
+  const [currentStep, setCurrentStep] = useState<'information' | 'shipping' | 'payment'>('information');
   const [showOrderSummary, setShowOrderSummary] = useState(false);
 
   const { items, getTotal } = useCartStore();
@@ -21,16 +18,22 @@ export default function CheckoutPage() {
     useCartStore.persist.rehydrate();
   }, []);
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price * 15000);
+  };
+
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-pure-white">
-        <div className="container-fluid py-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-warm-gray/20 w-32 mb-8" />
-            <div className="grid lg:grid-cols-2 gap-8">
-              <div className="h-96 bg-warm-gray/20" />
-              <div className="h-64 bg-warm-gray/20" />
-            </div>
+      <div style={{ minHeight: '100vh', backgroundColor: 'white' }}>
+        <div className="container" style={{ padding: '32px 24px' }}>
+          <div style={{ height: '32px', backgroundColor: '#e5e5e5', width: '120px', marginBottom: '32px' }} />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px' }}>
+            <div style={{ height: '400px', backgroundColor: '#e5e5e5' }} />
+            <div style={{ height: '250px', backgroundColor: '#e5e5e5' }} />
           </div>
         </div>
       </div>
@@ -38,61 +41,82 @@ export default function CheckoutPage() {
   }
 
   const total = getTotal();
-  const freeShippingThreshold = 500;
+  const freeShippingThreshold = 333;
   const shippingCost = total >= freeShippingThreshold ? 0 : 25;
   const estimatedTax = total * 0.1;
   const orderTotal = total + shippingCost + estimatedTax;
 
-  const steps: { key: CheckoutStep; label: string }[] = [
-    { key: 'information', label: 'Information' },
-    { key: 'shipping', label: 'Shipping' },
-    { key: 'payment', label: 'Payment' },
+  const steps = [
+    { key: 'information' as const, label: 'Informasi' },
+    { key: 'shipping' as const, label: 'Pengiriman' },
+    { key: 'payment' as const, label: 'Pembayaran' },
   ];
 
   const stepIndex = steps.findIndex((s) => s.key === currentStep);
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-pure-white pt-8">
-        <div className="container-fluid text-center py-20">
-          <h1 className="text-3xl font-serif mb-4">Your bag is empty</h1>
-          <Link href="/shop" className="btn-primary">
-            Continue Shopping
+      <div style={{ minHeight: '100vh', backgroundColor: 'white', paddingTop: '140px' }}>
+        <div className="container" style={{ textAlign: 'center', padding: '80px 24px' }}>
+          <h1 style={{ fontSize: '32px', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
+            Tas belanja Anda kosong
+          </h1>
+          <Link
+            href="/shop"
+            style={{
+              display: 'inline-block',
+              padding: '16px 40px',
+              backgroundColor: '#1a1a1a',
+              color: 'white',
+              fontSize: '12px',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+            }}
+          >
+            Lanjut Belanja
           </Link>
         </div>
       </div>
     );
   }
 
+  const inputStyle = {
+    width: '100%',
+    padding: '16px',
+    fontSize: '14px',
+    border: '1px solid #e5e5e5',
+    outline: 'none',
+  };
+
   return (
-    <div className="min-h-screen bg-pure-white">
-      <div className="grid lg:grid-cols-2">
+    <div style={{ minHeight: '100vh', backgroundColor: 'white' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
         {/* Left Column - Forms */}
-        <div className="order-2 lg:order-1 p-6 md:p-12 lg:p-16">
+        <div style={{ padding: '48px 24px', order: 2 }}>
           {/* Logo */}
-          <Link href="/" className="inline-block mb-8">
-            <h1 className="text-2xl font-serif tracking-[0.15em]">NOIR</h1>
+          <Link href="/" style={{ display: 'inline-block', marginBottom: '32px', textDecoration: 'none', color: '#1a1a1a' }}>
+            <h1 style={{ fontSize: '24px', fontFamily: 'Georgia, serif', letterSpacing: '4px' }}>NOIR</h1>
           </Link>
 
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-warm-gray mb-8 flex-wrap">
-            <Link href="/cart" className="hover:text-noir-black transition-colors">
-              Bag
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#888888', marginBottom: '32px', flexWrap: 'wrap' }}>
+            <Link href="/cart" style={{ textDecoration: 'none', color: '#888888' }}>
+              Tas
             </Link>
             {steps.map((step, index) => (
-              <div key={step.key} className="flex items-center gap-2">
-                <ChevronRight className="w-4 h-4" />
+              <div key={step.key} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ChevronRight size={16} />
                 <button
                   onClick={() => index <= stepIndex && setCurrentStep(step.key)}
                   disabled={index > stepIndex}
-                  className={cn(
-                    'transition-colors',
-                    step.key === currentStep
-                      ? 'text-noir-black'
-                      : index < stepIndex
-                      ? 'hover:text-noir-black cursor-pointer'
-                      : 'text-warm-gray/50 cursor-not-allowed'
-                  )}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: index <= stepIndex ? 'pointer' : 'not-allowed',
+                    color: step.key === currentStep ? '#1a1a1a' : index < stepIndex ? '#888888' : '#ccc',
+                    fontSize: '14px',
+                  }}
                 >
                   {step.label}
                 </button>
@@ -103,47 +127,67 @@ export default function CheckoutPage() {
           {/* Mobile Order Summary Toggle */}
           <button
             onClick={() => setShowOrderSummary(!showOrderSummary)}
-            className="lg:hidden w-full flex items-center justify-between p-4 bg-off-white mb-8"
+            style={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '16px',
+              backgroundColor: '#f8f6f3',
+              marginBottom: '32px',
+              border: 'none',
+              cursor: 'pointer',
+            }}
           >
-            <span className="flex items-center gap-2 text-sm">
-              {showOrderSummary ? 'Hide' : 'Show'} order summary
-              <ChevronDown
-                className={cn(
-                  'w-4 h-4 transition-transform',
-                  showOrderSummary && 'rotate-180'
-                )}
-              />
+            <span style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+              {showOrderSummary ? 'Sembunyikan' : 'Tampilkan'} ringkasan pesanan
+              <ChevronDown size={16} style={{ transform: showOrderSummary ? 'rotate(180deg)' : 'none' }} />
             </span>
-            <span className="font-medium">{formatPrice(orderTotal)}</span>
+            <span style={{ fontWeight: '500' }}>{formatPrice(orderTotal)}</span>
           </button>
 
           {/* Mobile Order Summary */}
           {showOrderSummary && (
-            <div className="lg:hidden mb-8 p-4 bg-off-white">
-              <div className="space-y-4">
+            <div style={{ marginBottom: '32px', padding: '16px', backgroundColor: '#f8f6f3' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {items.map((item) => (
                   <div
                     key={`${item.product.id}-${item.size}-${item.color}`}
-                    className="flex gap-4"
+                    style={{ display: 'flex', gap: '16px' }}
                   >
-                    <div className="relative w-16 h-20 bg-warm-gray/20 flex-shrink-0">
+                    <div style={{ position: 'relative', width: '64px', height: '80px', backgroundColor: '#e5e5e5', flexShrink: 0 }}>
                       <Image
                         src={item.product.images[0]}
                         alt={item.product.name}
                         fill
                         className="object-cover"
                       />
-                      <span className="absolute -top-2 -right-2 w-5 h-5 bg-noir-black text-pure-white text-xs rounded-full flex items-center justify-center">
+                      <span
+                        style={{
+                          position: 'absolute',
+                          top: '-8px',
+                          right: '-8px',
+                          width: '20px',
+                          height: '20px',
+                          backgroundColor: '#1a1a1a',
+                          color: 'white',
+                          fontSize: '10px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
                         {item.quantity}
                       </span>
                     </div>
-                    <div className="flex-1">
-                      <p className="text-sm">{item.product.name}</p>
-                      <p className="text-xs text-warm-gray">
+                    <div style={{ flex: 1 }}>
+                      <p style={{ fontSize: '14px' }}>{item.product.name}</p>
+                      <p style={{ fontSize: '12px', color: '#888888' }}>
                         {item.color} / {item.size}
                       </p>
                     </div>
-                    <p className="text-sm">
+                    <p style={{ fontSize: '14px' }}>
                       {formatPrice(item.product.price * item.quantity)}
                     </p>
                   </div>
@@ -154,130 +198,143 @@ export default function CheckoutPage() {
 
           {/* Information Step */}
           {currentStep === 'information' && (
-            <div className="space-y-6">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-serif">Contact</h2>
-                  <p className="text-sm text-warm-gray">
-                    Have an account?{' '}
-                    <Link href="/account" className="underline hover:no-underline">
-                      Log in
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                  <h2 style={{ fontSize: '18px', fontFamily: 'Georgia, serif' }}>Kontak</h2>
+                  <p style={{ fontSize: '14px', color: '#888888' }}>
+                    Punya akun?{' '}
+                    <Link href="/account" style={{ textDecoration: 'underline', color: '#888888' }}>
+                      Masuk
                     </Link>
                   </p>
                 </div>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="w-full"
-                />
-                <label className="flex items-center gap-2 mt-3 text-sm">
-                  <input type="checkbox" className="w-4 h-4" />
-                  Email me with news and offers
+                <input type="email" placeholder="Email" style={inputStyle} />
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px', fontSize: '14px' }}>
+                  <input type="checkbox" style={{ width: '16px', height: '16px' }} />
+                  Email saya dengan berita dan penawaran
                 </label>
               </div>
 
               <div>
-                <h2 className="text-lg font-serif mb-4">Shipping Address</h2>
-                <div className="space-y-4">
-                  <select className="w-full">
-                    <option>Country/Region</option>
+                <h2 style={{ fontSize: '18px', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>Alamat Pengiriman</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <select style={inputStyle}>
+                    <option>Negara/Wilayah</option>
                     <option>Indonesia</option>
-                    <option>United States</option>
-                    <option>United Kingdom</option>
-                    <option>Singapore</option>
+                    <option>Singapura</option>
+                    <option>Malaysia</option>
                   </select>
-                  <div className="grid grid-cols-2 gap-4">
-                    <input type="text" placeholder="First name" />
-                    <input type="text" placeholder="Last name" />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                    <input type="text" placeholder="Nama depan" style={inputStyle} />
+                    <input type="text" placeholder="Nama belakang" style={inputStyle} />
                   </div>
-                  <input type="text" placeholder="Address" />
-                  <input
-                    type="text"
-                    placeholder="Apartment, suite, etc. (optional)"
-                  />
-                  <div className="grid grid-cols-3 gap-4">
-                    <input type="text" placeholder="City" />
-                    <input type="text" placeholder="State" />
-                    <input type="text" placeholder="ZIP code" />
+                  <input type="text" placeholder="Alamat" style={inputStyle} />
+                  <input type="text" placeholder="Apartemen, suite, dll. (opsional)" style={inputStyle} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+                    <input type="text" placeholder="Kota" style={inputStyle} />
+                    <input type="text" placeholder="Provinsi" style={inputStyle} />
+                    <input type="text" placeholder="Kode pos" style={inputStyle} />
                   </div>
-                  <input type="tel" placeholder="Phone" />
+                  <input type="tel" placeholder="Telepon" style={inputStyle} />
                 </div>
               </div>
 
               <button
                 onClick={() => setCurrentStep('shipping')}
-                className="btn-primary w-full"
+                style={{
+                  width: '100%',
+                  padding: '16px',
+                  backgroundColor: '#1a1a1a',
+                  color: 'white',
+                  fontSize: '12px',
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
               >
-                Continue to Shipping
+                Lanjut ke Pengiriman
               </button>
             </div>
           )}
 
           {/* Shipping Step */}
           {currentStep === 'shipping' && (
-            <div className="space-y-6">
-              <div className="p-4 bg-off-white">
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-warm-gray">Contact</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <div style={{ padding: '16px', backgroundColor: '#f8f6f3' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
+                  <span style={{ color: '#888888' }}>Kontak</span>
                   <button
                     onClick={() => setCurrentStep('information')}
-                    className="text-xs underline"
+                    style={{ fontSize: '12px', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}
                   >
-                    Change
+                    Ubah
                   </button>
                 </div>
-                <p className="text-sm">customer@example.com</p>
+                <p style={{ fontSize: '14px' }}>customer@example.com</p>
               </div>
 
               <div>
-                <h2 className="text-lg font-serif mb-4">Shipping Method</h2>
-                <div className="space-y-3">
-                  <label className="flex items-center justify-between p-4 border border-noir-black cursor-pointer">
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="shipping"
-                        defaultChecked
-                        className="w-4 h-4"
-                      />
+                <h2 style={{ fontSize: '18px', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>Metode Pengiriman</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', border: '2px solid #1a1a1a', cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <input type="radio" name="shipping" defaultChecked style={{ width: '16px', height: '16px' }} />
                       <div>
-                        <p className="text-sm">Standard Shipping</p>
-                        <p className="text-xs text-warm-gray">3-5 business days</p>
+                        <p style={{ fontSize: '14px' }}>Pengiriman Standar</p>
+                        <p style={{ fontSize: '12px', color: '#888888' }}>3-5 hari kerja</p>
                       </div>
                     </div>
-                    <span className="text-sm">
-                      {shippingCost === 0 ? 'Free' : formatPrice(shippingCost)}
+                    <span style={{ fontSize: '14px' }}>
+                      {shippingCost === 0 ? 'Gratis' : formatPrice(shippingCost)}
                     </span>
                   </label>
-                  <label className="flex items-center justify-between p-4 border border-warm-gray/30 cursor-pointer hover:border-noir-black transition-colors">
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="shipping"
-                        className="w-4 h-4"
-                      />
+                  <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', border: '1px solid #e5e5e5', cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <input type="radio" name="shipping" style={{ width: '16px', height: '16px' }} />
                       <div>
-                        <p className="text-sm">Express Shipping</p>
-                        <p className="text-xs text-warm-gray">1-2 business days</p>
+                        <p style={{ fontSize: '14px' }}>Pengiriman Ekspres</p>
+                        <p style={{ fontSize: '12px', color: '#888888' }}>1-2 hari kerja</p>
                       </div>
                     </div>
-                    <span className="text-sm">{formatPrice(45)}</span>
+                    <span style={{ fontSize: '14px' }}>{formatPrice(45)}</span>
                   </label>
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div style={{ display: 'flex', gap: '16px' }}>
                 <button
                   onClick={() => setCurrentStep('information')}
-                  className="btn-secondary flex-1"
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    backgroundColor: 'white',
+                    color: '#1a1a1a',
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    border: '1px solid #1a1a1a',
+                    cursor: 'pointer',
+                  }}
                 >
-                  Back
+                  Kembali
                 </button>
                 <button
                   onClick={() => setCurrentStep('payment')}
-                  className="btn-primary flex-1"
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    backgroundColor: '#1a1a1a',
+                    color: 'white',
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    border: 'none',
+                    cursor: 'pointer',
+                  }}
                 >
-                  Continue to Payment
+                  Lanjut ke Pembayaran
                 </button>
               </div>
             </div>
@@ -285,160 +342,228 @@ export default function CheckoutPage() {
 
           {/* Payment Step */}
           {currentStep === 'payment' && (
-            <div className="space-y-6">
-              <div className="p-4 bg-off-white space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-warm-gray">Contact</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <div style={{ padding: '16px', backgroundColor: '#f8f6f3' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
+                  <span style={{ color: '#888888' }}>Kontak</span>
                   <button
                     onClick={() => setCurrentStep('information')}
-                    className="text-xs underline"
+                    style={{ fontSize: '12px', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}
                   >
-                    Change
+                    Ubah
                   </button>
                 </div>
-                <p className="text-sm">customer@example.com</p>
-                <div className="flex justify-between text-sm pt-2 border-t border-warm-gray/20">
-                  <span className="text-warm-gray">Ship to</span>
+                <p style={{ fontSize: '14px', marginBottom: '16px' }}>customer@example.com</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px', paddingTop: '16px', borderTop: '1px solid #e5e5e5' }}>
+                  <span style={{ color: '#888888' }}>Kirim ke</span>
                   <button
                     onClick={() => setCurrentStep('information')}
-                    className="text-xs underline"
+                    style={{ fontSize: '12px', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}
                   >
-                    Change
+                    Ubah
                   </button>
                 </div>
-                <p className="text-sm">123 Example St, City, 12345</p>
+                <p style={{ fontSize: '14px' }}>Jl. Contoh No. 123, Jakarta, 12345</p>
               </div>
 
               <div>
-                <h2 className="text-lg font-serif mb-4">Payment</h2>
-                <p className="text-sm text-warm-gray mb-4">
-                  All transactions are secure and encrypted.
+                <h2 style={{ fontSize: '18px', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>Pembayaran</h2>
+                <p style={{ fontSize: '14px', color: '#888888', marginBottom: '16px' }}>
+                  Semua transaksi aman dan terenkripsi.
                 </p>
 
-                <div className="border border-noir-black">
-                  <div className="flex items-center justify-between p-4 bg-off-white">
-                    <div className="flex items-center gap-3">
-                      <CreditCard className="w-5 h-5" />
-                      <span className="text-sm">Credit Card</span>
+                <div style={{ border: '1px solid #1a1a1a' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', backgroundColor: '#f8f6f3' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <CreditCard size={20} />
+                      <span style={{ fontSize: '14px' }}>Kartu Kredit</span>
                     </div>
-                    <div className="flex gap-2">
-                      <span className="text-xs text-warm-gray">Visa</span>
-                      <span className="text-xs text-warm-gray">Mastercard</span>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <span style={{ fontSize: '12px', color: '#888888' }}>Visa</span>
+                      <span style={{ fontSize: '12px', color: '#888888' }}>Mastercard</span>
                     </div>
                   </div>
-                  <div className="p-4 space-y-4">
-                    <input type="text" placeholder="Card number" />
-                    <input type="text" placeholder="Name on card" />
-                    <div className="grid grid-cols-2 gap-4">
-                      <input type="text" placeholder="Expiration (MM/YY)" />
-                      <input type="text" placeholder="Security code" />
+                  <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <input type="text" placeholder="Nomor kartu" style={inputStyle} />
+                    <input type="text" placeholder="Nama di kartu" style={inputStyle} />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                      <input type="text" placeholder="Kadaluarsa (MM/YY)" style={inputStyle} />
+                      <input type="text" placeholder="Kode keamanan" style={inputStyle} />
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-sm text-warm-gray">
-                <Lock className="w-4 h-4" />
-                <span>Your payment information is encrypted and secure</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#888888' }}>
+                <Lock size={16} />
+                <span>Informasi pembayaran Anda terenkripsi dan aman</span>
               </div>
 
-              <div className="flex gap-4">
+              <div style={{ display: 'flex', gap: '16px' }}>
                 <button
                   onClick={() => setCurrentStep('shipping')}
-                  className="btn-secondary flex-1"
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    backgroundColor: 'white',
+                    color: '#1a1a1a',
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    border: '1px solid #1a1a1a',
+                    cursor: 'pointer',
+                  }}
                 >
-                  Back
+                  Kembali
                 </button>
-                <button className="btn-primary flex-1">
-                  Pay {formatPrice(orderTotal)}
+                <button
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    backgroundColor: '#1a1a1a',
+                    color: 'white',
+                    fontSize: '12px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    border: 'none',
+                    cursor: 'pointer',
+                  }}
+                >
+                  Bayar {formatPrice(orderTotal)}
                 </button>
               </div>
             </div>
           )}
 
           {/* Footer */}
-          <div className="mt-12 pt-8 border-t border-warm-gray/20">
-            <div className="flex flex-wrap gap-4 text-xs text-warm-gray">
-              <Link href="/terms" className="hover:text-noir-black">
-                Terms of Service
+          <div style={{ marginTop: '48px', paddingTop: '32px', borderTop: '1px solid #e5e5e5' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', fontSize: '12px', color: '#888888' }}>
+              <Link href="/terms" style={{ textDecoration: 'none', color: '#888888' }}>
+                Syarat Layanan
               </Link>
-              <Link href="/privacy" className="hover:text-noir-black">
-                Privacy Policy
+              <Link href="/privacy" style={{ textDecoration: 'none', color: '#888888' }}>
+                Kebijakan Privasi
               </Link>
-              <Link href="/shipping-returns" className="hover:text-noir-black">
-                Shipping & Returns
+              <Link href="/shipping-returns" style={{ textDecoration: 'none', color: '#888888' }}>
+                Pengiriman & Pengembalian
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Right Column - Order Summary */}
-        <div className="order-1 lg:order-2 hidden lg:block bg-off-white p-12 lg:p-16 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
-          <div className="space-y-6">
+        {/* Right Column - Order Summary (Desktop) */}
+        <div
+          style={{
+            display: 'none',
+            backgroundColor: '#f8f6f3',
+            padding: '48px',
+            position: 'sticky',
+            top: 0,
+            height: '100vh',
+            overflowY: 'auto',
+            order: 1,
+          }}
+          className="desktop-summary"
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {/* Items */}
             {items.map((item) => (
               <div
                 key={`${item.product.id}-${item.size}-${item.color}`}
-                className="flex gap-4"
+                style={{ display: 'flex', gap: '16px' }}
               >
-                <div className="relative w-16 h-20 bg-warm-gray/20 flex-shrink-0">
+                <div style={{ position: 'relative', width: '64px', height: '80px', backgroundColor: '#e5e5e5', flexShrink: 0 }}>
                   <Image
                     src={item.product.images[0]}
                     alt={item.product.name}
                     fill
                     className="object-cover"
                   />
-                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-noir-black text-pure-white text-xs rounded-full flex items-center justify-center">
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '-8px',
+                      right: '-8px',
+                      width: '20px',
+                      height: '20px',
+                      backgroundColor: '#1a1a1a',
+                      color: 'white',
+                      fontSize: '10px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     {item.quantity}
                   </span>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm">{item.product.name}</p>
-                  <p className="text-xs text-warm-gray">
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: '14px' }}>{item.product.name}</p>
+                  <p style={{ fontSize: '12px', color: '#888888' }}>
                     {item.color} / {item.size}
                   </p>
                 </div>
-                <p className="text-sm">
+                <p style={{ fontSize: '14px' }}>
                   {formatPrice(item.product.price * item.quantity)}
                 </p>
               </div>
             ))}
 
             {/* Promo Code */}
-            <div className="flex gap-2 pt-6 border-t border-warm-gray/30">
+            <div style={{ display: 'flex', gap: '8px', paddingTop: '24px', borderTop: '1px solid #e5e5e5' }}>
               <input
                 type="text"
-                placeholder="Discount code"
-                className="flex-1"
+                placeholder="Kode diskon"
+                style={{ flex: 1, padding: '12px 16px', fontSize: '14px', border: '1px solid #e5e5e5' }}
               />
-              <button className="btn-secondary px-6">Apply</button>
+              <button
+                style={{
+                  padding: '12px 24px',
+                  backgroundColor: 'white',
+                  color: '#1a1a1a',
+                  fontSize: '12px',
+                  letterSpacing: '1px',
+                  textTransform: 'uppercase',
+                  border: '1px solid #1a1a1a',
+                  cursor: 'pointer',
+                }}
+              >
+                Terapkan
+              </button>
             </div>
 
             {/* Totals */}
-            <div className="space-y-3 pt-6 border-t border-warm-gray/30">
-              <div className="flex justify-between text-sm">
-                <span className="text-warm-gray">Subtotal</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', paddingTop: '24px', borderTop: '1px solid #e5e5e5' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
+                <span style={{ color: '#888888' }}>Subtotal</span>
                 <span>{formatPrice(total)}</span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-warm-gray">Shipping</span>
-                <span>
-                  {shippingCost === 0 ? 'Free' : formatPrice(shippingCost)}
-                </span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
+                <span style={{ color: '#888888' }}>Ongkos Kirim</span>
+                <span>{shippingCost === 0 ? 'Gratis' : formatPrice(shippingCost)}</span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-warm-gray">Estimated Tax</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px' }}>
+                <span style={{ color: '#888888' }}>Estimasi Pajak</span>
                 <span>{formatPrice(estimatedTax)}</span>
               </div>
             </div>
 
-            <div className="flex justify-between pt-6 border-t border-warm-gray/30">
-              <span className="text-lg">Total</span>
-              <span className="text-xl font-serif">{formatPrice(orderTotal)}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '24px', borderTop: '1px solid #e5e5e5' }}>
+              <span style={{ fontSize: '16px' }}>Total</span>
+              <span style={{ fontSize: '20px', fontFamily: 'Georgia, serif' }}>{formatPrice(orderTotal)}</span>
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        @media (min-width: 1024px) {
+          .desktop-summary {
+            display: block !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

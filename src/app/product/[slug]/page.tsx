@@ -15,11 +15,9 @@ import {
   RotateCcw,
   Shield,
 } from 'lucide-react';
-import { getProductBySlug, getRelatedProducts } from '@/data/products';
-import { formatPrice, cn } from '@/lib/utils';
+import { getProductBySlug, getRelatedProducts, products } from '@/data/products';
 import { useCartStore } from '@/store/cart';
 import { useWishlistStore } from '@/store/wishlist';
-import ProductCard from '@/components/product/ProductCard';
 
 export default function ProductPage() {
   const params = useParams();
@@ -35,6 +33,14 @@ export default function ProductPage() {
   const { addItem } = useCartStore();
   const { toggleItem, isInWishlist } = useWishlistStore();
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(price * 15000);
+  };
+
   useEffect(() => {
     if (product) {
       const availableSize = product.sizes.find((s) => s.inStock);
@@ -46,11 +52,25 @@ export default function ProductPage() {
 
   if (!product) {
     return (
-      <div className="pt-[120px] pb-20 min-h-screen">
-        <div className="container-fluid text-center">
-          <h1 className="text-4xl font-serif mb-4">Product Not Found</h1>
-          <Link href="/shop" className="btn-primary">
-            Back to Shop
+      <div style={{ paddingTop: '140px', paddingBottom: '80px', minHeight: '100vh', backgroundColor: '#f8f6f3' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <h1 style={{ fontSize: '40px', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
+            Produk Tidak Ditemukan
+          </h1>
+          <Link
+            href="/shop"
+            style={{
+              display: 'inline-block',
+              padding: '16px 40px',
+              backgroundColor: '#1a1a1a',
+              color: 'white',
+              fontSize: '12px',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+            }}
+          >
+            Kembali ke Toko
           </Link>
         </div>
       </div>
@@ -79,34 +99,37 @@ export default function ProductPage() {
   };
 
   return (
-    <div className="pt-[120px] pb-20 min-h-screen">
-      <div className="container-fluid">
+    <div style={{ paddingTop: '140px', paddingBottom: '80px', minHeight: '100vh', backgroundColor: '#f8f6f3' }}>
+      <div className="container">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-warm-gray mb-8">
-          <Link href="/" className="hover:text-noir-black transition-colors">
-            Home
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#888888', marginBottom: '32px', flexWrap: 'wrap' }}>
+          <Link href="/" style={{ textDecoration: 'none', color: '#888888' }}>
+            Beranda
           </Link>
-          <ChevronRight className="w-4 h-4" />
-          <Link href="/shop" className="hover:text-noir-black transition-colors">
-            Shop
+          <ChevronRight size={16} />
+          <Link href="/shop" style={{ textDecoration: 'none', color: '#888888' }}>
+            Belanja
           </Link>
-          <ChevronRight className="w-4 h-4" />
-          <Link
-            href={`/shop/${product.category}`}
-            className="hover:text-noir-black transition-colors capitalize"
-          >
+          <ChevronRight size={16} />
+          <Link href={`/shop/${product.category}`} style={{ textDecoration: 'none', color: '#888888', textTransform: 'capitalize' }}>
             {product.category}
           </Link>
-          <ChevronRight className="w-4 h-4" />
-          <span className="text-noir-black">{product.name}</span>
+          <ChevronRight size={16} />
+          <span style={{ color: '#1a1a1a' }}>{product.name}</span>
         </nav>
 
         {/* Product Content */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '48px',
+          }}
+        >
           {/* Image Gallery */}
-          <div className="space-y-4">
+          <div>
             {/* Main Image */}
-            <div className="relative aspect-[3/4] bg-off-white overflow-hidden">
+            <div style={{ position: 'relative', aspectRatio: '3/4', backgroundColor: 'white', marginBottom: '16px', overflow: 'hidden' }}>
               <Image
                 src={product.images[currentImageIndex]}
                 alt={product.name}
@@ -117,17 +140,21 @@ export default function ProductPage() {
 
               {/* Badge */}
               {product.badge && (
-                <div className="absolute top-4 left-4">
-                  <span
-                    className={cn('badge', {
-                      'badge-new': product.badge === 'new',
-                      'badge-limited': product.badge === 'limited',
-                      'badge-sold-out': product.badge === 'sold-out',
-                    })}
-                  >
-                    {product.badge === 'sold-out' ? 'Sold Out' : product.badge}
-                  </span>
-                </div>
+                <span
+                  style={{
+                    position: 'absolute',
+                    top: '16px',
+                    left: '16px',
+                    padding: '8px 16px',
+                    backgroundColor: product.badge === 'new' ? '#1a1a1a' : '#c9a962',
+                    color: product.badge === 'new' ? 'white' : '#1a1a1a',
+                    fontSize: '10px',
+                    letterSpacing: '1px',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {product.badge === 'sold-out' ? 'Habis' : product.badge === 'new' ? 'Baru' : 'Terbatas'}
+                </span>
               )}
 
               {/* Navigation Arrows */}
@@ -135,17 +162,35 @@ export default function ProductPage() {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-pure-white/80 hover:bg-pure-white transition-colors"
-                    aria-label="Previous image"
+                    style={{
+                      position: 'absolute',
+                      left: '16px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      padding: '12px',
+                      backgroundColor: 'rgba(255,255,255,0.9)',
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                    aria-label="Gambar sebelumnya"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft size={20} />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-pure-white/80 hover:bg-pure-white transition-colors"
-                    aria-label="Next image"
+                    style={{
+                      position: 'absolute',
+                      right: '16px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      padding: '12px',
+                      backgroundColor: 'rgba(255,255,255,0.9)',
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                    aria-label="Gambar berikutnya"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight size={20} />
                   </button>
                 </>
               )}
@@ -153,17 +198,20 @@ export default function ProductPage() {
 
             {/* Thumbnails */}
             {product.images.length > 1 && (
-              <div className="flex gap-3">
+              <div style={{ display: 'flex', gap: '12px' }}>
                 {product.images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
-                    className={cn(
-                      'relative w-20 h-24 bg-off-white overflow-hidden border-2 transition-colors',
-                      index === currentImageIndex
-                        ? 'border-noir-black'
-                        : 'border-transparent'
-                    )}
+                    style={{
+                      position: 'relative',
+                      width: '80px',
+                      height: '100px',
+                      backgroundColor: 'white',
+                      border: index === currentImageIndex ? '2px solid #1a1a1a' : '2px solid transparent',
+                      cursor: 'pointer',
+                      overflow: 'hidden',
+                    }}
                   >
                     <Image
                       src={image}
@@ -178,213 +226,249 @@ export default function ProductPage() {
           </div>
 
           {/* Product Info */}
-          <div className="lg:sticky lg:top-32 lg:self-start">
-            <div className="space-y-6">
-              {/* Title & Price */}
-              <div>
-                <p className="text-xs tracking-[0.15em] uppercase text-warm-gray mb-2">
-                  {product.category}
-                </p>
-                <h1 className="text-3xl md:text-4xl font-serif mb-4">
-                  {product.name}
-                </h1>
-                <div className="flex items-center gap-3">
-                  <p className="text-2xl">{formatPrice(product.price)}</p>
-                  {product.originalPrice && (
-                    <p className="text-xl text-warm-gray line-through">
-                      {formatPrice(product.originalPrice)}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Description */}
-              <p className="text-warm-gray leading-relaxed">
-                {product.description}
+          <div>
+            {/* Title & Price */}
+            <div style={{ marginBottom: '24px' }}>
+              <p style={{ fontSize: '12px', letterSpacing: '3px', textTransform: 'uppercase', color: '#888888', marginBottom: '8px' }}>
+                {product.category}
               </p>
-
-              {/* Color Selection */}
-              {product.colors.length > 0 && (
-                <div>
-                  <p className="text-sm tracking-[0.05em] mb-3">
-                    Color: <span className="text-warm-gray">{selectedColor}</span>
+              <h1 style={{ fontSize: 'clamp(28px, 4vw, 40px)', fontFamily: 'Georgia, serif', marginBottom: '16px' }}>
+                {product.name}
+              </h1>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <p style={{ fontSize: '24px' }}>{formatPrice(product.price)}</p>
+                {product.originalPrice && (
+                  <p style={{ fontSize: '20px', color: '#888888', textDecoration: 'line-through' }}>
+                    {formatPrice(product.originalPrice)}
                   </p>
-                  <div className="flex gap-3">
-                    {product.colors.map((color) => (
-                      <button
-                        key={color.name}
-                        onClick={() => color.inStock && setSelectedColor(color.name)}
-                        disabled={!color.inStock}
-                        className={cn(
-                          'w-10 h-10 rounded-full border-2 transition-all',
-                          selectedColor === color.name
-                            ? 'border-noir-black scale-110'
-                            : 'border-warm-gray/30',
-                          !color.inStock && 'opacity-30 cursor-not-allowed'
-                        )}
-                        style={{ backgroundColor: color.hex }}
-                        aria-label={color.name}
-                      />
-                    ))}
+                )}
+              </div>
+            </div>
+
+            {/* Description */}
+            <p style={{ color: '#888888', lineHeight: '1.8', marginBottom: '24px' }}>
+              {product.description}
+            </p>
+
+            {/* Color Selection */}
+            {product.colors.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <p style={{ fontSize: '14px', letterSpacing: '1px', marginBottom: '12px' }}>
+                  Warna: <span style={{ color: '#888888' }}>{selectedColor}</span>
+                </p>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  {product.colors.map((color) => (
+                    <button
+                      key={color.name}
+                      onClick={() => color.inStock && setSelectedColor(color.name)}
+                      disabled={!color.inStock}
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        border: selectedColor === color.name ? '2px solid #1a1a1a' : '2px solid #e5e5e5',
+                        backgroundColor: color.hex,
+                        cursor: color.inStock ? 'pointer' : 'not-allowed',
+                        opacity: color.inStock ? 1 : 0.3,
+                        transform: selectedColor === color.name ? 'scale(1.1)' : 'scale(1)',
+                        transition: 'all 0.2s ease',
+                      }}
+                      aria-label={color.name}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Size Selection */}
+            <div style={{ marginBottom: '24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <p style={{ fontSize: '14px', letterSpacing: '1px' }}>
+                  Ukuran: <span style={{ color: '#888888' }}>{selectedSize}</span>
+                </p>
+                <Link
+                  href="/size-guide"
+                  style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px', color: '#888888', textDecoration: 'none' }}
+                >
+                  <Ruler size={14} />
+                  Panduan Ukuran
+                </Link>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {product.sizes.map((size) => (
+                  <button
+                    key={size.name}
+                    onClick={() => size.inStock && setSelectedSize(size.name)}
+                    disabled={!size.inStock}
+                    style={{
+                      minWidth: '52px',
+                      padding: '12px 16px',
+                      border: selectedSize === size.name ? '1px solid #1a1a1a' : '1px solid #e5e5e5',
+                      backgroundColor: selectedSize === size.name ? '#1a1a1a' : 'white',
+                      color: selectedSize === size.name ? 'white' : '#1a1a1a',
+                      fontSize: '14px',
+                      cursor: size.inStock ? 'pointer' : 'not-allowed',
+                      opacity: size.inStock ? 1 : 0.3,
+                      textDecoration: size.inStock ? 'none' : 'line-through',
+                    }}
+                  >
+                    {size.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Quantity */}
+            <div style={{ marginBottom: '24px' }}>
+              <p style={{ fontSize: '14px', letterSpacing: '1px', marginBottom: '12px' }}>Jumlah</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    border: '1px solid #e5e5e5',
+                    backgroundColor: 'white',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  aria-label="Kurangi jumlah"
+                >
+                  <Minus size={16} />
+                </button>
+                <span style={{ width: '32px', textAlign: 'center', fontSize: '18px' }}>{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    border: '1px solid #e5e5e5',
+                    backgroundColor: 'white',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  aria-label="Tambah jumlah"
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div style={{ display: 'flex', gap: '12px', paddingTop: '16px' }}>
+              <button
+                onClick={handleAddToCart}
+                disabled={!product.inStock || !selectedSize || !selectedColor}
+                style={{
+                  flex: 1,
+                  padding: '16px',
+                  backgroundColor: product.inStock && selectedSize && selectedColor ? '#1a1a1a' : '#ccc',
+                  color: 'white',
+                  fontSize: '12px',
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  border: 'none',
+                  cursor: product.inStock && selectedSize && selectedColor ? 'pointer' : 'not-allowed',
+                }}
+              >
+                {product.inStock ? 'Tambah ke Keranjang' : 'Habis Terjual'}
+              </button>
+              <button
+                onClick={() => toggleItem(product)}
+                style={{
+                  padding: '16px',
+                  border: '1px solid #1a1a1a',
+                  backgroundColor: 'white',
+                  cursor: 'pointer',
+                }}
+                aria-label={inWishlist ? 'Hapus dari wishlist' : 'Tambah ke wishlist'}
+              >
+                <Heart size={20} style={{ fill: inWishlist ? '#c9a962' : 'transparent', color: inWishlist ? '#c9a962' : '#1a1a1a' }} />
+              </button>
+            </div>
+
+            {/* Features */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', paddingTop: '24px', marginTop: '24px', borderTop: '1px solid #e5e5e5' }}>
+              <div style={{ textAlign: 'center' }}>
+                <Truck size={20} style={{ color: '#888888', margin: '0 auto 8px' }} />
+                <p style={{ fontSize: '11px', letterSpacing: '1px' }}>Gratis Ongkir</p>
+                <p style={{ fontSize: '10px', color: '#888888' }}>Di atas Rp5jt</p>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <RotateCcw size={20} style={{ color: '#888888', margin: '0 auto 8px' }} />
+                <p style={{ fontSize: '11px', letterSpacing: '1px' }}>Gratis Retur</p>
+                <p style={{ fontSize: '10px', color: '#888888' }}>Dalam 30 hari</p>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <Shield size={20} style={{ color: '#888888', margin: '0 auto 8px' }} />
+                <p style={{ fontSize: '11px', letterSpacing: '1px' }}>Pembayaran Aman</p>
+                <p style={{ fontSize: '10px', color: '#888888' }}>100% Terlindungi</p>
+              </div>
+            </div>
+
+            {/* Tabs */}
+            <div style={{ paddingTop: '24px', marginTop: '24px', borderTop: '1px solid #e5e5e5' }}>
+              <div style={{ display: 'flex', gap: '24px', marginBottom: '24px' }}>
+                {(['details', 'care', 'shipping'] as const).map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    style={{
+                      fontSize: '14px',
+                      letterSpacing: '1px',
+                      paddingBottom: '8px',
+                      borderBottom: activeTab === tab ? '2px solid #1a1a1a' : '2px solid transparent',
+                      background: 'none',
+                      border: 'none',
+                      borderBottomWidth: '2px',
+                      borderBottomStyle: 'solid',
+                      borderBottomColor: activeTab === tab ? '#1a1a1a' : 'transparent',
+                      color: activeTab === tab ? '#1a1a1a' : '#888888',
+                      cursor: 'pointer',
+                      textTransform: 'capitalize',
+                    }}
+                  >
+                    {tab === 'details' ? 'Detail' : tab === 'care' ? 'Perawatan' : 'Pengiriman'}
+                  </button>
+                ))}
+              </div>
+
+              <div style={{ fontSize: '14px', color: '#888888', lineHeight: '1.8' }}>
+                {activeTab === 'details' && (
+                  <div>
+                    {product.material && (
+                      <p style={{ marginBottom: '16px' }}>
+                        <strong style={{ color: '#1a1a1a' }}>Bahan:</strong> {product.material}
+                      </p>
+                    )}
+                    {product.details && (
+                      <ul style={{ listStyle: 'none', padding: 0 }}>
+                        {product.details.map((detail, i) => (
+                          <li key={i} style={{ marginBottom: '8px' }}>• {detail}</li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
-                </div>
-              )}
-
-              {/* Size Selection */}
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm tracking-[0.05em]">
-                    Size: <span className="text-warm-gray">{selectedSize}</span>
-                  </p>
-                  <Link
-                    href="/size-guide"
-                    className="flex items-center gap-1 text-xs hover:text-warm-gray transition-colors"
-                  >
-                    <Ruler className="w-4 h-4" />
-                    Size Guide
-                  </Link>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {product.sizes.map((size) => (
-                    <button
-                      key={size.name}
-                      onClick={() => size.inStock && setSelectedSize(size.name)}
-                      disabled={!size.inStock}
-                      className={cn(
-                        'min-w-[52px] px-4 py-3 border text-sm transition-all',
-                        selectedSize === size.name
-                          ? 'border-noir-black bg-noir-black text-pure-white'
-                          : 'border-warm-gray/30 hover:border-noir-black',
-                        !size.inStock &&
-                          'opacity-30 cursor-not-allowed line-through hover:border-warm-gray/30'
-                      )}
-                    >
-                      {size.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quantity */}
-              <div>
-                <p className="text-sm tracking-[0.05em] mb-3">Quantity</p>
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-12 h-12 border border-warm-gray/30 flex items-center justify-center hover:border-noir-black transition-colors"
-                    aria-label="Decrease quantity"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <span className="w-8 text-center text-lg">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="w-12 h-12 border border-warm-gray/30 flex items-center justify-center hover:border-noir-black transition-colors"
-                    aria-label="Increase quantity"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="flex gap-3 pt-4">
-                <button
-                  onClick={handleAddToCart}
-                  disabled={!product.inStock || !selectedSize || !selectedColor}
-                  className={cn(
-                    'flex-1 btn-primary text-center',
-                    (!product.inStock || !selectedSize || !selectedColor) &&
-                      'opacity-50 cursor-not-allowed hover:bg-noir-black hover:text-pure-white'
-                  )}
-                >
-                  {product.inStock ? 'Add to Bag' : 'Sold Out'}
-                </button>
-                <button
-                  onClick={() => toggleItem(product)}
-                  className="p-4 border border-noir-black hover:bg-noir-black hover:text-pure-white transition-colors"
-                  aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-                >
-                  <Heart
-                    className={cn('w-5 h-5', {
-                      'fill-burgundy text-burgundy': inWishlist,
-                    })}
-                  />
-                </button>
-              </div>
-
-              {/* Features */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-warm-gray/20">
-                <div className="text-center">
-                  <Truck className="w-5 h-5 mx-auto mb-2 text-warm-gray" />
-                  <p className="text-[11px] tracking-[0.05em]">Free Shipping</p>
-                  <p className="text-[10px] text-warm-gray">Over $500</p>
-                </div>
-                <div className="text-center">
-                  <RotateCcw className="w-5 h-5 mx-auto mb-2 text-warm-gray" />
-                  <p className="text-[11px] tracking-[0.05em]">Free Returns</p>
-                  <p className="text-[10px] text-warm-gray">Within 30 days</p>
-                </div>
-                <div className="text-center">
-                  <Shield className="w-5 h-5 mx-auto mb-2 text-warm-gray" />
-                  <p className="text-[11px] tracking-[0.05em]">Secure Payment</p>
-                  <p className="text-[10px] text-warm-gray">100% Protected</p>
-                </div>
-              </div>
-
-              {/* Tabs */}
-              <div className="pt-6 border-t border-warm-gray/20">
-                <div className="flex gap-6 mb-6">
-                  {(['details', 'care', 'shipping'] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={cn(
-                        'text-sm tracking-[0.05em] pb-2 border-b-2 transition-colors capitalize',
-                        activeTab === tab
-                          ? 'border-noir-black text-noir-black'
-                          : 'border-transparent text-warm-gray hover:text-noir-black'
-                      )}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="text-sm text-warm-gray leading-relaxed">
-                  {activeTab === 'details' && (
-                    <div className="space-y-4">
-                      {product.material && (
-                        <p>
-                          <strong className="text-noir-black">Material:</strong>{' '}
-                          {product.material}
-                        </p>
-                      )}
-                      {product.details && (
-                        <ul className="space-y-1">
-                          {product.details.map((detail, i) => (
-                            <li key={i}>• {detail}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  )}
-                  {activeTab === 'care' && product.care && (
-                    <ul className="space-y-1">
-                      {product.care.map((instruction, i) => (
-                        <li key={i}>• {instruction}</li>
-                      ))}
-                    </ul>
-                  )}
-                  {activeTab === 'shipping' && (
-                    <div className="space-y-2">
-                      <p>• Complimentary shipping on orders over $500</p>
-                      <p>• Standard delivery: 3-5 business days</p>
-                      <p>• Express delivery: 1-2 business days</p>
-                      <p>• International shipping available</p>
-                    </div>
-                  )}
-                </div>
+                )}
+                {activeTab === 'care' && product.care && (
+                  <ul style={{ listStyle: 'none', padding: 0 }}>
+                    {product.care.map((instruction, i) => (
+                      <li key={i} style={{ marginBottom: '8px' }}>• {instruction}</li>
+                    ))}
+                  </ul>
+                )}
+                {activeTab === 'shipping' && (
+                  <ul style={{ listStyle: 'none', padding: 0 }}>
+                    <li style={{ marginBottom: '8px' }}>• Gratis ongkir untuk pesanan di atas Rp5.000.000</li>
+                    <li style={{ marginBottom: '8px' }}>• Pengiriman standar: 3-5 hari kerja</li>
+                    <li style={{ marginBottom: '8px' }}>• Pengiriman ekspres: 1-2 hari kerja</li>
+                    <li style={{ marginBottom: '8px' }}>• Pengiriman internasional tersedia</li>
+                  </ul>
+                )}
               </div>
             </div>
           </div>
@@ -392,13 +476,34 @@ export default function ProductPage() {
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <section className="mt-24">
-            <h2 className="text-2xl md:text-3xl font-serif text-center mb-12">
-              Complete the Look
+          <section style={{ marginTop: '96px' }}>
+            <h2 style={{ fontSize: 'clamp(24px, 3vw, 32px)', fontFamily: 'Georgia, serif', textAlign: 'center', marginBottom: '48px' }}>
+              Lengkapi Tampilan Anda
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {relatedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+                gap: '24px',
+              }}
+            >
+              {relatedProducts.map((relatedProduct) => (
+                <Link
+                  key={relatedProduct.id}
+                  href={`/product/${relatedProduct.slug}`}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <div style={{ position: 'relative', aspectRatio: '3/4', marginBottom: '16px', backgroundColor: 'white' }}>
+                    <Image
+                      src={relatedProduct.images[0]}
+                      alt={relatedProduct.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <h3 style={{ fontSize: '14px', marginBottom: '4px' }}>{relatedProduct.name}</h3>
+                  <p style={{ fontSize: '14px', color: '#888888' }}>{formatPrice(relatedProduct.price)}</p>
+                </Link>
               ))}
             </div>
           </section>
